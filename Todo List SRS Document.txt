@@ -70,13 +70,16 @@ Draft Type and Number	Full Name	Information about the revision. This table does 
 <TO DO: Please provide a brief introduction to your project and a brief overview of what the reader will find in this section.>
 1.1	Document Purpose 
 
-The product that this SRS is describing is the "Todo List" Version 1.0. The SRS will describe the total functionality of the "Todo List" program.
+The product that this SRS is describing is the "Todo List" Version 1.0. The SRS will describe the total functionality of the "Todo List" program and its requirements.
 
 <Identify the product whose software requirements are specified in this document, including the revision or release number. Describe the scope of the product that is covered by this SRS, particularly if this SRS describes only part of the system or a single subsystem.
 TO DO: Write 1-2 paragraphs describing the purpose of this document as explained above.>
 1.2	Product Scope
 <Provide a short description of the software being specified and its purpose, including relevant benefits, objectives, and goals. 
 TO DO: 1-2 paragraphs describing the scope of the product. Make sure to describe the benefits associated with the product.>
+
+The software described is the Todo List program.  The main feature of the program will be adding and removing tasks. Some of the other features/benifits of the program are: Subtasks, showing overdue tasks, and task prioritiziation markers. 
+
 1.3	Intended Audience and Document Overview
 <Describe the different types of reader that the document is intended for, such as developers, project managers, marketing staff, users, testers, and documentation writers (In your case it would probably be the “client” and the professor). Describe what the rest of this SRS contains and how it is organized. Suggest a sequence for reading the document, beginning with the overview sections and proceeding through the sections that are most pertinent to each reader type.>
 
