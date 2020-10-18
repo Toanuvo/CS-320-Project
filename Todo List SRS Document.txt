@@ -83,6 +83,8 @@ The software described is the Todo List program.  The main feature of the progra
 1.3	Intended Audience and Document Overview
 <Describe the different types of reader that the document is intended for, such as developers, project managers, marketing staff, users, testers, and documentation writers (In your case it would probably be the “client” and the professor). Describe what the rest of this SRS contains and how it is organized. Suggest a sequence for reading the document, beginning with the overview sections and proceeding through the sections that are most pertinent to each reader type.>
 
+This docuement is meant for the professor grading the project and any user that may use the products functionality to benefit themselves
+
 1.4	Definitions, Acronyms and Abbreviations
 <Define all the terms necessary to properly interpret the SRS, including acronyms and abbreviations. You may wish to build a separate glossary that spans multiple projects or the entire organization, and just include terms specific to a single project in each SRS.
 TO DO: Please provide a list of all abbreviations and acronyms used in this document sorted in alphabetical order.>
