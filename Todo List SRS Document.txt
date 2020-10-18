@@ -69,6 +69,9 @@ Draft Type and Number	Full Name	Information about the revision. This table does 
 1	Introduction
 <TO DO: Please provide a brief introduction to your project and a brief overview of what the reader will find in this section.>
 1.1	Document Purpose 
+
+The product that this SRS is describing is the "Todo List" Version 1.0. The SRS will describe the total functionality of the "Todo List" program.
+
 <Identify the product whose software requirements are specified in this document, including the revision or release number. Describe the scope of the product that is covered by this SRS, particularly if this SRS describes only part of the system or a single subsystem.
 TO DO: Write 1-2 paragraphs describing the purpose of this document as explained above.>
 1.2	Product Scope
