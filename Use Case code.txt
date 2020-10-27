@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+:Client: as C
+:Super User: as D
+:User: as U
+C --|> U
+D--|>U
+rectangle TodoList {
+  U -- (Create task)
+(Create task)--> (verify date):include
+(verify date)--> (new task added to the TodoList)
+U--(set task priority)
+(Create task) --.> (set task priority):extend
+(set task priority)--> (new task added to the TodoList)
+U -- (set task name)
+(Create task) --.>(set task name):extend
+(set task name)--> (new task added to the TodoList)
+U--(Complete task)
+U--(Delete task)
+(Delete task)-->(Task removed from the TodoList):include
+(Complete task)-->(Task removed from the TodoList):include
+D -- (Change the current date of the system)
+(Complete task) -->(Modify points):include
+}
+@enduml
