@@ -7,18 +7,19 @@
   <link rel="stylesheet" href="todolist%20style.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
-
+  <script type="text/javascript" src="controller.js"></script>
 </head>
 <body>
-<div class="ui grid">
-  <div class="three wide column">
+
+<div class="ui stretched grid">
+  <div class="two wide two tall column">
   <div class="ui vertical fluid tabular menu">
     <a class="item active" data-tab="first"> Tasks</a>
     <a class="item" data-tab="second">Tutorial</a>
     <a class="item" data-tab="third">Settings</a>
   </div>
   </div>
-  <div class="nine wide stretched column">
+  <div class="fourteen wide stretched column">
   <div class="ui vertical active tab segment" data-tab="first">
     The tasks page
   </div>
@@ -34,5 +35,4 @@
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
 </script>
-
 </html>
