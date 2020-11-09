@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="todolist%20style.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
-  <script type="text/javascript" src="controller.js"></script>
-</head>
-<body>
 
+</head>
+
+<body>
 <div class="ui stretched grid">
   <div class="two wide two tall column">
   <div class="ui vertical fluid tabular menu">
@@ -20,19 +20,28 @@
   </div>
   </div>
   <div class="fourteen wide stretched column">
-  <div class="ui vertical active tab segment" data-tab="first">
-    The tasks page
+  <div class="ui vertical active tab segment" id="tasks" data-tab="first">
+    A tasks page
   </div>
-  <div class="ui vertical tab segment" data-tab="second">
+  <div class="ui vertical tab segment" id="tutorial" data-tab="second">
     A tutorial page
   </div>
-  <div class="ui vertical tab segment" data-tab="third">
+  <div class="ui vertical tab segment" id="settings" data-tab="third">
     A settings page
   </div>
   </div>
 </div>
+
+
+
 </body>
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
 </script>
+<footer>
+  <section class="footer-info">
+    TodoList by Kevin Zavadlov and Riley Barnes
+  </section>
+</footer>
+<script type="text/javascript" src="controller.js"></script>
 </html>
