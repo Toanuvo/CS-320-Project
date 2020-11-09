@@ -5,27 +5,34 @@
   <title>Title</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
   <link rel="stylesheet" href="todolist%20style.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
+
 </head>
 <body>
 <div class="ui grid">
   <div class="three wide column">
-    <div class="ui vertical fluid tabular menu">
-      <a class="item">
-        Tasks
-      </a>
-      <a class="item active">
-        Tutorial
-      </a>
-      <a class="item">
-        Settings
-      </a>
-    </div>
+  <div class="ui vertical fluid tabular menu">
+    <a class="item active" data-tab="first"> Tasks</a>
+    <a class="item" data-tab="second">Tutorial</a>
+    <a class="item" data-tab="third">Settings</a>
   </div>
-  <div class="twelve wide stretched column">
-    <div class="ui segment">
-      This is an stretched grid column. This segment will always match the tab height
-    </div>
+  </div>
+  <div class="nine wide stretched column">
+  <div class="ui vertical active tab segment" data-tab="first">
+    The tasks page
+  </div>
+  <div class="ui vertical tab segment" data-tab="second">
+    A tutorial page
+  </div>
+  <div class="ui vertical tab segment" data-tab="third">
+    A settings page
+  </div>
   </div>
 </div>
 </body>
+<script type="text/javascript">
+  $('.tabular.menu .item').tab();
+</script>
+
 </html>
