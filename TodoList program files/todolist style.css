@@ -8,3 +8,7 @@ html, body {
 .ui.grid {
   height: 100%;
 }
+#pointsdisplay
+.ui.grid {
+  height: 50%;
+}
