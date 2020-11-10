@@ -1,14 +1,16 @@
 body {
   margin-top: 50px;
+ /*  background: black;*/
 }
-html, body {
-  height: 100%;
+/*#menu1,#menu2,#menu3{
+  color: white;
+}
+
+ */
+#pointsdisplay {
+  height: 10%;
 }
 
 .ui.grid {
   height: 100%;
-}
-#pointsdisplay
-.ui.grid {
-  height: 50%;
 }
