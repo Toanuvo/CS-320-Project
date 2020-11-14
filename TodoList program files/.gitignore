@@ -4,3 +4,4 @@
 /ui_calc.py
 *.iml
 /node_modules
+package-lock.json
