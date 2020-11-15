@@ -26,7 +26,10 @@
   <div class="ui active tab segment" id="home" data-tab="tab1">
     Home page
   </div>
-  <div class="ui vertical tab segment" id="tasks" data-tab="tab2">
+  <div class="ui vertical tab segment" id="task_display" data-tab="tab2">
+    <div class="ui raised center aligned compact segment" id="taskdate">
+      0/0/00
+    </div>
     <div class="ui raised green segment">
       Inputs for a new task <br>
       <div class="ui input">
@@ -65,8 +68,8 @@
         Edit Task
       </button>
     </div>
-    <div class="ui raised segment" id="testrow">
-      testrow
+    <div id="tasks">
+
     </div>
   </div>
   <div class="ui vertical tab segment" id="tutorial" data-tab="tab3">
@@ -84,13 +87,9 @@
         desciption
       </p>
     </div>
-
-
-
   </div>
+</div>
 
-
-  </div>
   <div class="one wide stretched column" id="pointsdisplay" >
     <div class="ui raised segment">
       points
@@ -99,8 +98,16 @@
         0
       </div>
     </div>
+    <div class="ui raised segment">
+      streak
+      <br>
+      <div class="ui black inverted segment">
+        0
+      </div>
+    </div>
   </div>
 </div>
+
 
 
 
