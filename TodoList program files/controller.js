@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 class Task {
-  constructor(name, date, priority) {
+  constructor(name, date, desc, priority) {
+    this.desc = desc;
     this.name = name;
     this.date = date;
     this.priority = priority;
@@ -10,11 +11,25 @@ class Task {
 class List {
   constructor() {
     this.tasks = [];
+    this.points = 0;
+    this.streak = 0;
   }
 
   addtask(name, date, priority) {
     const task = new Task(name, date, priority);
     this.tasks.push(task);
+  }
+
+  edittask(task, name, data, desc, priority) {
+    // change specific task in array for different needs
+  }
+
+  compeltetask(task) {
+
+  }
+
+  failtask(task) {
+
   }
 
   removetask(task) {
