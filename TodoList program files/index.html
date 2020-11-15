@@ -23,11 +23,12 @@
   </div>
   <div class="thirteen wide stretched column">
 
-  <div class="ui vertial tab segment" id="home" data-tab="tab1">
+  <div class="ui active tab segment" id="home" data-tab="tab1">
     Home page
   </div>
-  <div class="ui vertical active tab segment" id="tasks" data-tab="tab2">
+  <div class="ui vertical tab segment" id="tasks" data-tab="tab2">
     <div class="ui raised segment">
+      Inputs for a new task <br>
       <div class="ui input">
         <input type="text" placeholder="Task name" id="name_input">
       </div>
@@ -66,9 +67,24 @@
   <div class="ui vertical tab segment" id="tutorial" data-tab="tab3">
     A tutorial page
   </div>
-  <div class="ui vertical tab segment" id="settings" data-tab="tav4">
-    A settings page
+  <div class="ui vertical tab segment" id="settings" data-tab="tab4">
+    A settings page<br>
+    <div class="ui segment">
+      <p>
+      <button class="ui button">example setting button</button>
+      description goes here
+      </p>
+      <p>
+      <button class="ui button">example setting</button>
+        desciption
+      </p>
+    </div>
+
+
+
   </div>
+
+
   </div>
   <div class="one wide stretched column" id="pointsdisplay" >
     <div class="ui raised segment">
@@ -84,9 +100,11 @@
 
 
 </body>
+<!-- script to make sematic UI work -->
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
 </script>
+
 <footer>
   <section class="footer-info">
     TodoList by Kevin Zavadlov and Riley Barnes
