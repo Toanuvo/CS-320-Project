@@ -8,6 +8,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
 
+
 </head>
 
 <body>
@@ -27,6 +28,27 @@
   </div>
   <div class="ui vertical active tab segment" id="tasks" data-tab="tab2">
     <div class="ui raised segment">
+      <div class="ui input">
+        <input type="text" placeholder="Task name" id="name_input">
+      </div>
+      <div class="ui horizontal segments">
+        <div class="ui segment">
+          <div class="ui input">
+            <input type="text" placeholder="Task date" id="date_input">
+          </div>
+        </div>
+        <div class="ui segment">
+          <div class="ui input">
+            <input type="text" placeholder="Task priority" id="priority_input">
+          </div>
+        </div>
+      </div>
+      <button class="ui button" id="addtask_button">
+        Addtask
+      </button>
+
+    </div>
+    <div class="ui raised segment">
       example task
       <div class="ui horizontal segments">
         <div class="ui segment">
@@ -37,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="ui raised segment">
+    <div class="ui raised segment" id="testrow">
       row 2
     </div>
   </div>
@@ -51,6 +73,10 @@
   <div class="one wide stretched column" id="pointsdisplay" >
     <div class="ui raised segment">
       points
+      <br>
+      <div class="ui black inverted segment">
+        0
+      </div>
     </div>
   </div>
 </div>
