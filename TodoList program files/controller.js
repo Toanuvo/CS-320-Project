@@ -25,7 +25,7 @@ class List {
   }
 
   compeltetask(task) {
-
+    this.points = this.points + this.streak + 1;
   }
 
   failtask(task) {
@@ -102,7 +102,6 @@ function addtask() {
 
 function deletetask() {
   const name = document.getElementById('name_input');
-  console.log(name.value);
 
   for (const t of maintodolist.tasks) {
     if (t.name === name.value) {
