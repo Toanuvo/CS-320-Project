@@ -1,12 +1,10 @@
 body {
   margin-top: 50px;
- /*  background: black;*/
-}
-/*#menu1,#menu2,#menu3{
-  color: white;
+ background: slategrey;
 }
 
- */
+
+
 #pointsdisplay {
   height: 10%;
 }
@@ -15,10 +13,29 @@ body {
   height: 100%;
 }
 
-.ui.segment.raised{
+
+/*
+
+.ui.segment{
+  background: dimgray;
+  color: white;
 
 }
 
+input[type="text"]{
+
+  background-color : #d1d1d1;
+
+}
+
+
+
+.ui.input{
+  background-color: black;
+  background: black;
+  color: red;
+}
+*/
 #taskdate{
   text-align: center;
 }

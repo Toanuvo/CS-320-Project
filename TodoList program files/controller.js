@@ -45,7 +45,7 @@ class List {
 }
 console.log('controller loaded');
 
-// todo subtasks, add task desc functionality, task sorting
+// todo subtasks, add task desc functionality (use text area?), task sorting
 
 // setup variables and objects
 const addtaskB = document.getElementById('addtask_button');
