@@ -20,7 +20,13 @@ class List {
     this.tasks.push(task);
   }
 
-  edittask(task, name, date, desc, priority) {
+  edittask(tasknum, name, date, desc, priority) {
+    const task = this.tasks[tasknum];
+    task.name = name;
+    task.date = date;
+    task.desc = desc;
+    task.priority = priority;
+
     // change specific task in array for different needs
   }
 
@@ -44,7 +50,7 @@ const deletetaskB = document.getElementById('deletetask_button');
 const taskdisplay = document.getElementById('tasks');
 
 const maintodolist = new List();
-let tasknum = 0;
+let curtask = -1;
 
 // define controller functions
 function displaytasks() {
@@ -68,15 +74,8 @@ function displaytasks() {
     B.id = `edittask${tempnum}`;
     B.innerText = 'Edit Task';
 
-    B.addEventListener('click', function () {
-      const name = document.getElementById('name_input');
-      const date = document.getElementById('date_input');
-      const priority = document.getElementById('priority_input');
-
-      name.value = t.name;
-      date.value = t.date;
-      priority.value = t.priority;
-    });
+    // edit task function
+    B.addEventListener('click', edittask.bind(this, t));
 
     sect.appendChild(D);
     sect.appendChild(P);
@@ -91,13 +90,31 @@ function addtask() {
   const name = document.getElementById('name_input');
   const date = document.getElementById('date_input');
   const priority = document.getElementById('priority_input');
-  maintodolist.addtask(name.value, date.value, priority.value);
+
+  if (curtask !== -1) {
+    maintodolist.edittask(curtask, name.value, date.value, '', priority.value);
+    curtask = -1;
+    document.getElementById('task_editor_title').innerText = 'Inputs for a new task';
+  } else {
+    maintodolist.addtask(name.value, date.value, priority.value);
+  }
   displaytasks();
 
   name.value = '';
   date.value = '';
   priority.value = '';
-  tasknum++;
+}
+
+function edittask(task) {
+  curtask = maintodolist.tasks.indexOf(task);
+  const name = document.getElementById('name_input');
+  const date = document.getElementById('date_input');
+  const priority = document.getElementById('priority_input');
+
+  name.value = task.name;
+  date.value = task.date;
+  priority.value = task.priority;
+  document.getElementById('task_editor_title').innerText = `editing task ${task.name}`;
 }
 
 function deletetask() {
@@ -110,7 +127,6 @@ function deletetask() {
   }
 
   displaytasks();
-  tasknum--;
 }
 
 // attach listeners
