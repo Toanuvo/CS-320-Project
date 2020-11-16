@@ -32,6 +32,7 @@ class List {
 
   compeltetask(task) {
     this.points = this.points + this.streak + 1;
+    this.removetask(task);
   }
 
   failtask(task) {
@@ -48,12 +49,13 @@ console.log('controller script loaded');
 const addtaskB = document.getElementById('addtask_button');
 const deletetaskB = document.getElementById('deletetask_button');
 const taskdisplay = document.getElementById('tasks');
+const pointsdisplay = document.getElementById('points');
 
 const maintodolist = new List();
 let curtask = -1;
 
 // define controller functions
-function displaytasks() {
+function displayTasks() {
   taskdisplay.innerHTML = '';
   let tempnum = 0;
   for (const t of maintodolist.tasks) {
@@ -65,6 +67,7 @@ function displaytasks() {
     const P = document.createElement('DIV');
     const sect = document.createElement('DIV');
     const B = document.createElement('BUTTON');
+    const C = document.createElement('BUTTON');
     sect.className = 'ui horizontal segments';
     D.className = 'ui segment';
     D.innerText = t.date;
@@ -73,20 +76,27 @@ function displaytasks() {
     B.className = 'ui button';
     B.id = `edittask${tempnum}`;
     B.innerText = 'Edit Task';
+    C.className = 'ui button';
+    C.id = `completetask${tempnum}`;
+    C.innerText = 'Complete Task';
 
     // edit task function
-    B.addEventListener('click', edittask.bind(this, t));
+    B.addEventListener('click', editTask.bind(this, t));
+    C.addEventListener('click', completeTask.bind(this, t));
 
     sect.appendChild(D);
     sect.appendChild(P);
     T.appendChild(sect);
     T.appendChild(B);
+    T.appendChild(C);
     taskdisplay.appendChild(T);
     tempnum++;
   }
+
+  pointsdisplay.innerText = maintodolist.points;
 }
 
-function addtask() {
+function addTask() {
   const name = document.getElementById('name_input');
   const date = document.getElementById('date_input');
   const priority = document.getElementById('priority_input');
@@ -98,14 +108,14 @@ function addtask() {
   } else {
     maintodolist.addtask(name.value, date.value, priority.value);
   }
-  displaytasks();
+  displayTasks();
 
   name.value = '';
   date.value = '';
   priority.value = '';
 }
 
-function edittask(task) {
+function editTask(task) {
   curtask = maintodolist.tasks.indexOf(task);
   const name = document.getElementById('name_input');
   const date = document.getElementById('date_input');
@@ -117,18 +127,21 @@ function edittask(task) {
   document.getElementById('task_editor_title').innerText = `editing task ${task.name}`;
 }
 
-function deletetask() {
-  const name = document.getElementById('name_input');
-
-  for (const t of maintodolist.tasks) {
-    if (t.name === name.value) {
-      maintodolist.removetask(t);
-    }
+function deleteTask() {
+  if (curtask !== -1) {
+    const task = maintodolist.tasks[curtask];
+    maintodolist.removetask(task);
+    curtask = -1;
   }
 
-  displaytasks();
+  displayTasks();
+}
+
+function completeTask(task) {
+  maintodolist.compeltetask(task);
+  displayTasks();
 }
 
 // attach listeners
-addtaskB.addEventListener('click', addtask);
-deletetaskB.addEventListener('click', deletetask);
+addtaskB.addEventListener('click', addTask);
+deletetaskB.addEventListener('click', deleteTask);
