@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Todolist</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
   <link rel="stylesheet" href="todolist%20style.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -32,13 +32,17 @@
     </div>
     <div class="ui raised green segment" >
       <p id="task_editor_title">Inputs for a new task</p>
-      <div class="ui input">
+      <div class="ui action input">
         <input type="text" placeholder="Task name" id="name_input">
+        <button class="right attached ui button" id="clearinput_button">
+          Clear All Inputs
+        </button>
       </div>
+
       <div class="ui horizontal segments">
         <div class="ui segment">
           <div class="ui input">
-            <input type="text" placeholder="Task date" id="date_input">
+            <input type="date" placeholder="Task date" id="date_input">
           </div>
         </div>
         <div class="ui segment">
@@ -48,10 +52,10 @@
         </div>
       </div>
       <button class="ui button" id="addtask_button">
-        Add task
+        Add Task
       </button>
       <button class="ui button" id="deletetask_button">
-        Delete task
+        Delete Task
       </button>
     </div>
     <div class="ui raised segment">
@@ -115,6 +119,8 @@
 <!-- script to make sematic UI work -->
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
+
+
 </script>
 
 <footer>

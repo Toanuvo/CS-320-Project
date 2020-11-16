@@ -1,8 +1,8 @@
 // eslint-disable-next-line max-classes-per-file
 class Task {
   constructor(name, date, desc, priority) {
-    this.desc = desc;
     this.name = name;
+    this.desc = desc;
     this.date = date;
     this.priority = priority;
   }
@@ -43,13 +43,19 @@ class List {
     this.tasks.splice(this.tasks.indexOf(task), 1);
   }
 }
-console.log('controller script loaded');
+console.log('controller loaded');
+
+// todo subtasks, add task desc functionality (use text area?), task sorting
 
 // setup variables and objects
 const addtaskB = document.getElementById('addtask_button');
 const deletetaskB = document.getElementById('deletetask_button');
+const clearinputB = document.getElementById('clearinput_button');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
+const name = document.getElementById('name_input');
+const date = document.getElementById('date_input');
+const priority = document.getElementById('priority_input');
 
 const maintodolist = new List();
 let curtask = -1;
@@ -97,10 +103,6 @@ function displayTasks() {
 }
 
 function addTask() {
-  const name = document.getElementById('name_input');
-  const date = document.getElementById('date_input');
-  const priority = document.getElementById('priority_input');
-
   if (curtask !== -1) {
     maintodolist.edittask(curtask, name.value, date.value, '', priority.value);
     curtask = -1;
@@ -109,22 +111,17 @@ function addTask() {
     maintodolist.addtask(name.value, date.value, priority.value);
   }
   displayTasks();
-
-  name.value = '';
-  date.value = '';
-  priority.value = '';
+  clearInput();
 }
 
 function editTask(task) {
   curtask = maintodolist.tasks.indexOf(task);
-  const name = document.getElementById('name_input');
-  const date = document.getElementById('date_input');
-  const priority = document.getElementById('priority_input');
 
   name.value = task.name;
   date.value = task.date;
   priority.value = task.priority;
   document.getElementById('task_editor_title').innerText = `editing task ${task.name}`;
+  addtaskB.innerText = `reconfigure ${task.name}`;
 }
 
 function deleteTask() {
@@ -142,6 +139,16 @@ function completeTask(task) {
   displayTasks();
 }
 
+function clearInput() {
+  name.value = '';
+  date.value = '';
+  priority.value = '';
+  document.getElementById('task_editor_title').innerText = 'Inputs for a new task';
+  curtask = -1;
+  addtaskB.innerText = 'Add Task';
+}
+
 // attach listeners
 addtaskB.addEventListener('click', addTask);
 deletetaskB.addEventListener('click', deleteTask);
+clearinputB.addEventListener('click', clearInput);
