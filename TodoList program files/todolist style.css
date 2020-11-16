@@ -12,7 +12,10 @@ body {
 .ui.grid {
   height: 100%;
 }
-
+#desc_input{
+  resize: none;
+  width: 100%;
+}
 
 /*
 
