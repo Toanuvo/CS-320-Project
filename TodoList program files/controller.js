@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 class Task {
   constructor(name, date, desc, priority) {
     this.name = name;

@@ -5,7 +5,8 @@
 		"sourceType": "module"
 	},
 	"rules": {
-		"max-len": ["error", 120],
+    "max-classes-per-file": ["error", 20],
+    "max-len": ["error", 120],
 		"no-console": "off",
 		"prefer-arrow-callback": "off",
 		"no-plusplus": "off",
@@ -14,6 +15,7 @@
 		"no-restricted-syntax": "off"
 	},
 	"globals": {
+    "document": true,
 		"_": true
 	}
 }
