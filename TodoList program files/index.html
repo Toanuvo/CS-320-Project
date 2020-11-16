@@ -32,24 +32,28 @@
     </div>
     <div class="ui raised green segment" >
       <p id="task_editor_title">Inputs for a new task</p>
-      <div class="ui action input">
-        <input type="text" placeholder="Task name" id="name_input">
-        <button class="right attached ui button" id="clearinput_button">
-          Clear All Inputs
-        </button>
-      </div>
+
 
       <div class="ui horizontal segments">
         <div class="ui segment">
-          <div class="ui input">
-            <input type="date" placeholder="Task date" id="date_input">
+          <div class="ui fluid input">
+            <input type="text" placeholder="Task Name" id="name_input">
           </div>
         </div>
         <div class="ui segment">
-          <div class="ui input">
-            <input type="text" placeholder="Task priority" id="priority_input">
+          <div class="ui fluid input">
+            <input type="date" placeholder="Task Date" id="date_input">
           </div>
         </div>
+        <div class="ui segment">
+          <div class="ui fluid input">
+            <input type="text" placeholder="Task Priority" id="priority_input">
+          </div>
+        </div>
+      </div>
+
+      <div class="ui segment">
+        <textarea id="desc_input" placeholder="Task Description" rows="4"></textarea>
       </div>
       <button class="ui button" id="addtask_button">
         Add Task
@@ -57,16 +61,25 @@
       <button class="ui button" id="deletetask_button">
         Delete Task
       </button>
+      <button class="right attached ui button" id="clearinput_button">
+        Clear All Inputs
+      </button>
     </div>
     <div class="ui raised segment">
-      example task
+      task format reference
       <div class="ui horizontal segments">
+        <div class="ui segment">
+          example task name
+        </div>
         <div class="ui segment">
           example date
         </div>
         <div class="ui segment">
           example priority
         </div>
+      </div>
+      <div class="ui raised segment">
+        example task description
       </div>
       <button class="ui button" id="edittask_button">
         Edit Task
