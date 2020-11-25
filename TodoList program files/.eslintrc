@@ -12,7 +12,8 @@
 		"no-plusplus": "off",
 		"linebreak-style": "off",
 		"func-names": "off",
-		"no-restricted-syntax": "off"
+		"no-restricted-syntax": "off",
+    "no-use-before-define": "off"
 	},
 	"globals": {
     "document": true,
