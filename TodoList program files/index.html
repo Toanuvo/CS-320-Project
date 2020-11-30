@@ -176,15 +176,16 @@
 
       <p>
       <div class="ui selection dropdown">
-        <input type="hidden" name="UI color">
+        <input type="hidden" name="UI color" id="background_setting">
         <i class="dropdown icon"></i>
         <div class="default text">UI Color</div>
         <div class="menu">
-          <div class="item" data-value="1">Red</div>
-          <div class="item" data-value="0">Blue</div>
+          <div class="item" data-value="red">Red</div>
+          <div class="item" data-value="blue">Blue</div>
+          <div class="item" data-value="slategray">Slategray</div>
         </div>
       </div>
-      <button class="ui button">apply</button>
+      <button class="ui button" id="apply_background_setting">apply</button>
 
       </p>
       <p>
@@ -256,8 +257,7 @@
 <!-- script to make sematic UI work -->
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
-
-
+  $('.ui.dropdown').dropdown();
 </script>
 
 <footer>

@@ -80,6 +80,7 @@ console.log('controller loaded');
 const addtaskB = document.getElementById('addtask_button');
 const deletetaskB = document.getElementById('deletetask_button');
 const clearinputB = document.getElementById('clearinput_button');
+const applybgB = document.getElementById('apply_background_setting');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
 const name = document.getElementById('name_input');
@@ -202,28 +203,28 @@ function addSubTask(task) {
   document.getElementById('task_editor_title').innerText = `Adding subtask to ${task.name}`;
   addtaskB.innerText = 'Add Subtask';
 }
-function Load(){
+function Load() {
 
 }
-function Save(){
+function Save() {
 
 }
-function resetPoints(){
+function resetPoints() {
 
 }
-function resetStreak(){
+function resetStreak() {
 
 }
-function changeUiColor(){
+function changeUiColor() {
+  const setting = document.getElementById('background_setting').value;
+  document.body.style.backgroundColor = setting;
+}
+function changeFont() {
 
 }
-function changeFont(){
+function changeFontColor() {
 
 }
-function changeFontColor(){
-
-}
-
 
 function editTask(task) {
   if (task.parenttask !== undefined) {
@@ -263,3 +264,4 @@ function completeTask(task) {
 addtaskB.addEventListener('click', addTask);
 deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
+applybgB.addEventListener('click', changeUiColor);
