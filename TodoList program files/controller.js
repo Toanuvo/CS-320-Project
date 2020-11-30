@@ -202,6 +202,28 @@ function addSubTask(task) {
   document.getElementById('task_editor_title').innerText = `Adding subtask to ${task.name}`;
   addtaskB.innerText = 'Add Subtask';
 }
+function Load(){
+
+}
+function Save(){
+
+}
+function resetPoints(){
+
+}
+function resetStreak(){
+
+}
+function changeUiColor(){
+
+}
+function changeFont(){
+
+}
+function changeFontColor(){
+
+}
+
 
 function editTask(task) {
   if (task.parenttask !== undefined) {
