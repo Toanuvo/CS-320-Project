@@ -102,6 +102,8 @@ const addtaskB = document.getElementById('addtask_button');
 const deletetaskB = document.getElementById('deletetask_button');
 const clearinputB = document.getElementById('clearinput_button');
 const applybgB = document.getElementById('apply_background_setting');
+const usernameB = document.getElementById('username_button');
+const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
 const homepagetaskdisplay = document.getElementById('homepage_tasks');
@@ -109,8 +111,6 @@ const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
-const usernameB = document.getElementById('username_button');
-const sortBs = document.querySelectorAll('[data-sortB]');
 
 const maintodolist = new List();
 let curtask = -1;
@@ -300,6 +300,7 @@ function deleteTask() {
   displayTasks();
 }
 
+// gets passed a button html object and uses the inner text to determine the sort type
 function sortTasks(button) {
   switch (button.innerHTML) {
     case 'A-Z':
@@ -325,7 +326,7 @@ function completeTask(task) {
   displayTasks();
 }
 
-// helper function since JS doesnt recognize string as ints in any way
+// helper function since JS doesnt recognize strings as ints in any easy way
 function strToInt(s) {
   let sum = 0;
   for (let i = 0; i < s.length; i++) {
