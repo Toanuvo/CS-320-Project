@@ -122,10 +122,10 @@ const maintodolist = new List();
 let curtask = -1;
 let addingsubtask = false;
 let editsubtask = false;
-datedisplay.innerText = maintodolist.date.toLocaleDateString();
+
 // define controller functions
 
-// might want to give make a single task display function
+// displays all tasks by creating the html for them
 function displayTasks() {
   taskdisplay.innerHTML = '';
   let tempnum = 0;
@@ -137,15 +137,17 @@ function displayTasks() {
       TASK.appendChild(SUB);
       tempnum++;
     }
-
     taskdisplay.appendChild(TASK);
   }
   pointsdisplay.innerText = maintodolist.points;
   displayHomePageTasks();
 }
 
+// helped function to create the html for tasks
 function createTaskHTML(t, tempnum, subtask) {
   const TASK = document.createElement('DIV');
+
+  // change task look depending on type
   if (subtask) {
     TASK.className = 'ui secondary segment';
   } else if (t.date < maintodolist.date) {
@@ -158,7 +160,6 @@ function createTaskHTML(t, tempnum, subtask) {
   const sect = document.createElement('DIV');
   const EDIT_B = document.createElement('BUTTON');
   const COMPLETE_B = document.createElement('BUTTON');
-
   const DESC = document.createElement('DIV');
 
   sect.className = 'ui horizontal segments';
@@ -293,6 +294,7 @@ function editTask(task) {
   addtaskB.innerText = `reconfigure ${task.name}`;
 }
 
+// if a task is selected set the task to either a subtask or task and delete it
 function deleteTask() {
   if (curtask !== -1) {
     let task;
@@ -304,7 +306,6 @@ function deleteTask() {
     maintodolist.removetask(task);
     curtask = -1;
   }
-
   displayTasks();
 }
 
@@ -332,6 +333,7 @@ function sortTasks(button) {
   displayTasks();
 }
 
+// complete task functionality handled by List class
 function completeTask(task) {
   maintodolist.compeltetask(task);
   displayTasks();
@@ -355,4 +357,6 @@ usernameB.addEventListener('click', changeUsername);
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
 }
-displayTasks();
+
+// other setup
+datedisplay.innerText = maintodolist.date.toLocaleDateString();
