@@ -2,7 +2,7 @@ class Task {
   constructor(name, date, priority, desc, parenttask) {
     this.name = name;
     this.desc = desc;
-    this.date = date;
+    this.date = new Date(date);
     this.priority = priority;
     this.subtasks = [];
     this.parenttask = parenttask;
@@ -29,6 +29,7 @@ class List {
     this.subtasks = [];
     this.points = 0;
     this.streak = 0;
+    this.date = new Date();
   }
 
   changeUsername(name) {
@@ -52,7 +53,7 @@ class List {
       task = this.subtasks[tasknum];
     } else { task = this.tasks[tasknum]; }
     task.name = name;
-    task.date = date;
+    task.date = new Date(date);
     task.desc = desc;
     task.priority = priority;
 
@@ -92,6 +93,10 @@ class List {
   sort10() {
     this.tasks.sort((a, b) => (b.priority - a.priority));
   }
+
+  sortDate() {
+    this.tasks.sort((a, b) => (a.date - b.date));
+  }
 }
 console.log('controller loaded');
 
@@ -111,12 +116,13 @@ const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
+const datedisplay = document.getElementById('currentdate');
 
 const maintodolist = new List();
 let curtask = -1;
 let addingsubtask = false;
 let editsubtask = false;
-
+datedisplay.innerText = maintodolist.date.toLocaleDateString();
 // define controller functions
 
 // might want to give make a single task display function
@@ -142,6 +148,8 @@ function createTaskHTML(t, tempnum, subtask) {
   const TASK = document.createElement('DIV');
   if (subtask) {
     TASK.className = 'ui secondary segment';
+  } else if (t.date < maintodolist.date) {
+    TASK.className = 'ui raised red segment';
   } else { TASK.className = 'ui raised segment'; }
   TASK.id = `task${tempnum}`;
   const NAME = document.createElement('DIV');
@@ -157,7 +165,7 @@ function createTaskHTML(t, tempnum, subtask) {
   NAME.className = 'ui segment';
   NAME.innerText = t.name;
   DATE.className = 'ui segment';
-  DATE.innerText = t.date;
+  DATE.innerText = t.date.toLocaleDateString();
   PRIORITY.className = 'ui segment';
   PRIORITY.innerText = t.priority;
   DESC.className = 'ui raised segment';
@@ -278,7 +286,7 @@ function editTask(task) {
   } else { curtask = maintodolist.tasks.indexOf(task); }
 
   name.value = task.name;
-  date.value = task.date;
+  date.value = task.date.toLocaleDateString('en-CA');
   priority.value = task.priority;
   desc.value = task.desc;
   document.getElementById('task_editor_title').innerText = `editing task ${task.name}`;
@@ -315,6 +323,9 @@ function sortTasks(button) {
     case '100-1':
       maintodolist.sort10();
       break;
+    case '1/11/1111':
+      maintodolist.sortDate();
+      break;
     default:
       console.log('THIS SHOULDNT PRINT, YOUR SORT BUTTON EVENTS ARE MESSED UP');
   }
@@ -344,3 +355,4 @@ usernameB.addEventListener('click', changeUsername);
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
 }
+displayTasks();
