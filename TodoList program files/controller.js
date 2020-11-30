@@ -24,15 +24,15 @@ class Task {
 
 class List {
   constructor() {
-    this.username = "User"
+    this.username = 'User';
     this.tasks = [];
     this.subtasks = [];
     this.points = 0;
     this.streak = 0;
   }
-  changeUsername(name){
-    this.username = name;
 
+  changeUsername(name) {
+    this.username = name;
   }
 
   addtask(name, date, priority, desc, tasknum) {
@@ -60,7 +60,7 @@ class List {
   }
 
   compeltetask(task) {
-    this.points = this.points + this.streak + 1;
+    this.points *= (this.streak + 1);
     this.removetask(task);
   }
 
@@ -76,6 +76,22 @@ class List {
       this.subtasks.splice(this.subtasks.indexOf(task), 1);
     }
   }
+
+  sortAZ() {
+    this.tasks.sort((a, b) => (strToInt(a.name) - strToInt(b.name)));
+  }
+
+  sortZA() {
+    this.tasks.sort((a, b) => (strToInt(b.name) - strToInt(a.name)));
+  }
+
+  sort01() {
+    this.tasks.sort((a, b) => (a.priority - b.priority));
+  }
+
+  sort10() {
+    this.tasks.sort((a, b) => (b.priority - a.priority));
+  }
 }
 console.log('controller loaded');
 
@@ -88,11 +104,13 @@ const clearinputB = document.getElementById('clearinput_button');
 const applybgB = document.getElementById('apply_background_setting');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
+const homepagetaskdisplay = document.getElementById('homepage_tasks');
 const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
-const usernameB = document.getElementById('username_button')
+const usernameB = document.getElementById('username_button');
+const sortBs = document.querySelectorAll('[data-sortB]');
 
 const maintodolist = new List();
 let curtask = -1;
@@ -117,6 +135,7 @@ function displayTasks() {
     taskdisplay.appendChild(TASK);
   }
   pointsdisplay.innerText = maintodolist.points;
+  displayHomePageTasks();
 }
 
 function createTaskHTML(t, tempnum, subtask) {
@@ -231,13 +250,25 @@ function changeFont() {
 function changeFontColor() {
 
 }
-function displayHomePageList(){
+function displayHomePageTasks() {
+  homepagetaskdisplay.innerHTML = '';
+  let tempnum = 0;
 
-
+  for (let i = 0; i <= Math.min(5, maintodolist.tasks.length - 1); i++) {
+    const t = maintodolist.tasks[i];
+    const TASK = createTaskHTML(t, tempnum, false);
+    tempnum++;
+    for (const s of t.subtasks) {
+      const SUB = createTaskHTML(s, tempnum, true);
+      TASK.appendChild(SUB);
+      tempnum++;
+    }
+    homepagetaskdisplay.appendChild(TASK);
+  }
 }
-function changeUsername(){
-  maintodolist.changeUsername(document.getElementById('username_input').value)
-  document.getElementById('username_input').value = ""
+function changeUsername() {
+  maintodolist.changeUsername(document.getElementById('username_input').value);
+  document.getElementById('username_input').value = '';
 }
 
 function editTask(task) {
@@ -269,9 +300,38 @@ function deleteTask() {
   displayTasks();
 }
 
+function sortTasks(button) {
+  switch (button.innerHTML) {
+    case 'A-Z':
+      maintodolist.sortAZ();
+      break;
+    case 'Z-A':
+      maintodolist.sortZA();
+      break;
+    case '1-100':
+      maintodolist.sort01();
+      break;
+    case '100-1':
+      maintodolist.sort10();
+      break;
+    default:
+      console.log('THIS SHOULDNT PRINT, YOUR SORT BUTTON EVENTS ARE MESSED UP');
+  }
+  displayTasks();
+}
+
 function completeTask(task) {
   maintodolist.compeltetask(task);
   displayTasks();
+}
+
+// helper function since JS doesnt recognize string as ints in any way
+function strToInt(s) {
+  let sum = 0;
+  for (let i = 0; i < s.length; i++) {
+    sum += s.charCodeAt(i);
+  }
+  return sum;
 }
 
 // attach listeners
@@ -279,4 +339,7 @@ addtaskB.addEventListener('click', addTask);
 deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
 applybgB.addEventListener('click', changeUiColor);
-usernameB.addEventListener('click', changeUsername)
+usernameB.addEventListener('click', changeUsername);
+for (const T of sortBs) {
+  T.addEventListener('click', sortTasks.bind(this, T));
+}

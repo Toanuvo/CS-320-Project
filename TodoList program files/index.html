@@ -21,15 +21,45 @@
     <a class="item" data-tab="tab4" id="menu4">Settings</a>
   </div>
   </div>
+
   <div class="thirteen wide stretched column">
 
-  <div class="ui active tab segment" id="home" data-tab="tab1">
+  <div class="ui active vertical tab segment" id="home" data-tab="tab1">
+    <div class="ui raised segment" >
+    <h1 class="ui header" id="greeting">
+      <i class="hand paper icon"></i>
+      <div class="content">
+        Hello User
+      </div>
+    </h1>
+    </div>
+
+    <div class="ui horizontal segments">
+      <div class="ui raised segment" >
+        <p>
+          These are your top 5 tasks:
+        </p>
+      </div>
+
+      <a class="ui basic label">
+        SORT BY:
+      </a>
+      <div class="ui buttons">
+        <button class="ui button" data-sortB >A-Z</button>
+        <button class="ui button" data-sortB>Z-A</button>
+        <button class="ui button" data-sortB>1-100</button>
+        <button class="ui button" data-sortB>100-1</button>
+      </div>
+
+    </div>
+
+    <div id="homepage_tasks" >
+
+    </div>
 
   </div>
+
   <div class="ui vertical tab segment" id="task_display" data-tab="tab2">
-    <div class="ui raised center aligned compact segment" id="taskdate">
-      0/0/00
-    </div>
     <div class="ui raised green segment" >
       <p id="task_editor_title">Inputs for a new task</p>
 
@@ -55,18 +85,29 @@
       <div class="ui segment">
         <textarea id="desc_input" placeholder="Task Description" rows="4"></textarea>
       </div>
-      <button class="ui button" id="addtask_button">
-        Add Task
-      </button>
-      <button class="ui button" id="deletetask_button">
-        Delete Task
-      </button>
-      <button class="ui button" id="clearinput_button">
-        Clear All Inputs
-      </button>
+      <div class="ui buttons">
+        <button class="ui button" id="addtask_button">
+          Add Task
+        </button>
+        <button class="ui button" id="deletetask_button">
+          Delete Task
+        </button>
+        <button class="ui button" id="clearinput_button">
+          Clear All Inputs
+        </button>
+      </div>
+      <a class="ui basic label">
+        SORT BY:
+      </a>
+      <div class="ui buttons">
+        <button class="ui button" data-sortB>A-Z</button>
+        <button class="ui button" data-sortB>Z-A</button>
+        <button class="ui button" data-sortB>1-100</button>
+        <button class="ui button" data-sortB>100-1</button>
+      </div>
     </div>
     <div class="ui raised segment">
-      task format reference
+      task format reference. to be removed
       <div class="ui horizontal segments">
         <div class="ui segment">
           example task name
@@ -87,7 +128,7 @@
       <button class="ui button">
         Compelete Task
       </button>
-      <div class="ui compact secondary segment">
+      <div class="ui secondary segment">
         Subtask format reference
         <div class="ui horizontal segments">
           <div class="ui segment">
@@ -216,7 +257,6 @@
       </p>
     </div>
   </div>
-
   <div class="ui vertical tab segment" id="settings" data-tab="tab4">
    <br>
     <div class="ui segment">
@@ -300,20 +340,28 @@
 
     </div>
   </div>
-</div>
+
+  </div>
 
   <div class="one wide stretched column" id="pointsdisplay" >
     <div class="ui raised segment">
+     Date
+      <br>
+      <div class="ui black inverted segment" id="currentdate">
+        0/00/00
+      </div>
+    </div>
+    <div class="ui raised segment">
       points
       <br>
-      <div class="ui black inverted segment" id="points">
+      <div class="ui black inverted circular segment" id="points">
         0
       </div>
     </div>
     <div class="ui raised segment">
       streak
       <br>
-      <div class="ui black inverted segment">
+      <div class="ui black inverted circular segment">
         0
       </div>
     </div>
@@ -325,6 +373,7 @@
 <script type="text/javascript">
   $('.tabular.menu .item').tab();
   $('.ui.dropdown').dropdown();
+
 </script>
 
 <footer>
