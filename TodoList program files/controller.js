@@ -30,6 +30,10 @@ class List {
     this.points = 0;
     this.streak = 0;
   }
+  changeUsername(name){
+    this.username = name;
+
+  }
 
   addtask(name, date, priority, desc, tasknum) {
     const task = new Task(name, date, priority, desc);
@@ -88,6 +92,7 @@ const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
+const usernameB = document.getElementById('username_button')
 
 const maintodolist = new List();
 let curtask = -1;
@@ -228,9 +233,11 @@ function changeFontColor() {
 }
 function displayHomePageList(){
 
+
 }
 function changeUsername(){
-
+  maintodolist.changeUsername(document.getElementById('username_input').value)
+  document.getElementById('username_input').value = ""
 }
 
 function editTask(task) {
@@ -272,3 +279,4 @@ addtaskB.addEventListener('click', addTask);
 deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
 applybgB.addEventListener('click', changeUiColor);
+usernameB.addEventListener('click', changeUsername)
