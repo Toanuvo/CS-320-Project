@@ -24,6 +24,7 @@ class Task {
 
 class List {
   constructor() {
+    this.username = "User"
     this.tasks = [];
     this.subtasks = [];
     this.points = 0;
@@ -221,6 +222,12 @@ function changeFont(){
 
 }
 function changeFontColor(){
+
+}
+function displayHomePageList(){
+
+}
+function changeUsername(){
 
 }
 
