@@ -30,6 +30,7 @@ class List {
     this.points = 0;
     this.streak = 0;
     this.date = new Date();
+    this.sorttype = '1-100';
   }
 
   changeUsername(name) {
@@ -78,24 +79,35 @@ class List {
     }
   }
 
+  // sort types:
+  // A-Z: sort by task name alphabetically, uses ascii codes
+  // Z-A: sort by task name reverse alphabetically,  uses ascii codes
+  // 01/1-100: sort by task priority lowest first
+  // 10/100-1: sort by task priority highest first
+  // 1/11/1111: sort by task date: earliest first
   sortAZ() {
     this.tasks.sort((a, b) => (strToInt(a.name) - strToInt(b.name)));
+    maintodolist.sorttype = 'A-Z';
   }
 
   sortZA() {
     this.tasks.sort((a, b) => (strToInt(b.name) - strToInt(a.name)));
+    maintodolist.sorttype = 'Z-A';
   }
 
   sort01() {
     this.tasks.sort((a, b) => (a.priority - b.priority));
+    maintodolist.sorttype = '1-100';
   }
 
   sort10() {
     this.tasks.sort((a, b) => (b.priority - a.priority));
+    maintodolist.sorttype = '100-1';
   }
 
   sortDate() {
     this.tasks.sort((a, b) => (a.date - b.date));
+    maintodolist.sorttype = '1/11/1111';
   }
 }
 console.log('controller loaded');
@@ -127,6 +139,7 @@ let editsubtask = false;
 
 // displays all tasks by creating the html for them
 function displayTasks() {
+  sortTasks();
   taskdisplay.innerHTML = '';
   let tempnum = 0;
   for (const t of maintodolist.tasks) {
@@ -205,7 +218,7 @@ function createTaskHTML(t, tempnum, subtask) {
 function clearInput() {
   name.value = '';
   date.value = '';
-  priority.value = '';
+  priority.value = 0;
   desc.value = '';
   document.getElementById('task_editor_title').innerText = 'Inputs for a new task';
   curtask = -1;
@@ -263,7 +276,7 @@ function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
   let tempnum = 0;
 
-  for (let i = 0; i <= Math.min(5, maintodolist.tasks.length - 1); i++) {
+  for (let i = 0; i < Math.min(5, maintodolist.tasks.length); i++) {
     const t = maintodolist.tasks[i];
     const TASK = createTaskHTML(t, tempnum, false);
     tempnum++;
@@ -311,7 +324,13 @@ function deleteTask() {
 
 // gets passed a button html object and uses the inner text to determine the sort type
 function sortTasks(button) {
-  switch (button.innerHTML) {
+  let sort;
+  // if sort was called by a sort button use its value otherwise use the List's current sort type
+  if (button === undefined) {
+    sort = maintodolist.sorttype;
+  } else { sort = button.innerHTML; }
+
+  switch (sort) {
     case 'A-Z':
       maintodolist.sortAZ();
       break;
@@ -330,7 +349,9 @@ function sortTasks(button) {
     default:
       console.log('THIS SHOULDNT PRINT, YOUR SORT BUTTON EVENTS ARE MESSED UP');
   }
-  displayTasks();
+
+  // displaytasks() calls sorttasks() with no argument this would loop infinitly without if statment
+  if (button !== undefined) { displayTasks(); }
 }
 
 // complete task functionality handled by List class
