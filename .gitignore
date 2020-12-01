@@ -1,6 +1,6 @@
 /venv
 /app/.idea
-
+/.idea
 *.iml
 /app/node_modules
 package-lock.json
