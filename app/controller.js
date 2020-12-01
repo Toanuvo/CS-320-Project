@@ -2,7 +2,9 @@ class Task {
   constructor(name, date, priority, desc, parenttask) {
     this.name = name;
     this.desc = desc;
-    this.date = new Date(date);
+    if (date === '') {
+      this.date = new Date();
+    } else { this.date = new Date(date); }
     this.priority = priority;
     this.subtasks = [];
     this.parenttask = parenttask;
@@ -30,16 +32,41 @@ class List {
     this.points = 0;
     this.streak = 0;
     this.date = new Date();
+
     this.sorttype = '1-100';
-    this.font = "Arial"
+    this.UIColor = 'slategray';
+    this.font = 'Arial';
+    this.fontColor = 'black';
   }
-  resetPoints(){
-    this.points = 0
 
+  loadList(list) {
+    this.username = list.username;
+    this.tasks = [];
+    this.subtasks = [];
+    for (const t of list.tasks) {
+      const T = new Task(t.name, t.date, t.priority, t.desc);
+      for (const st of list.subtasks) {
+        const sT = new Task(st.name, st.date, st.priority, st.desc, T);
+        T.subtasks.push(sT);
+        this.subtasks.push(sT);
+      }
+      this.tasks.push(T);
+    }
+    this.points = list.points;
+    this.streak = list.streak;
+    this.date = new Date();
+    this.sorttype = list.sorttype;
+    this.font = list.font;
+    this.UIColor = list.UIColor;
+    this.fontColor = list.fontColor;
   }
-  resetStreak(){
-    this.streak = 0
 
+  resetPoints() {
+    this.points = 0;
+  }
+
+  resetStreak() {
+    this.streak = 0;
   }
 
   changeUsername(name) {
@@ -71,11 +98,10 @@ class List {
   }
 
   compeltetask(task) {
-    if (this.streak != 0){
-      this.points += (this.streak * 1);
-    }else {
-      this.points += ( 1);
-
+    if (this.streak !== 0) {
+      this.points += (this.streak);
+    } else {
+      this.points += (1);
     }
 
     this.removetask(task);
@@ -135,14 +161,14 @@ const deletetaskB = document.getElementById('deletetask_button');
 const clearinputB = document.getElementById('clearinput_button');
 const applybgB = document.getElementById('apply_background_setting');
 const usernameB = document.getElementById('username_button');
-const saveB = document.getElementById('save_button')
-const saveAllB = document.getElementById('saveAll_button')
-const loadB = document.getElementById('load_button')
-const pointResetB = document.getElementById('point_reset_button')
-const streakResetB = document.getElementById('streak_reset_button')
-const cheatB = document.getElementById('adminUser')
-const fontB = document.getElementById("font_button")
-const fontColorB = document.getElementById('font_color_button')
+const saveB = document.getElementById('save_button');
+const saveAllB = document.getElementById('saveAll_button');
+const loadB = document.getElementById('load_button');
+const pointResetB = document.getElementById('point_reset_button');
+const streakResetB = document.getElementById('streak_reset_button');
+const cheatB = document.getElementById('adminUser');
+const fontB = document.getElementById('font_button');
+const fontColorB = document.getElementById('font_color_button');
 
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
@@ -154,7 +180,7 @@ const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
 const datedisplay = document.getElementById('currentdate');
 
-const maintodolist = new List();
+let maintodolist = new List();
 let curtask = -1;
 let addingsubtask = false;
 let editsubtask = false;
@@ -187,7 +213,11 @@ function createTaskHTML(t, tempnum, subtask) {
   // change task look depending on type
   if (subtask) {
     TASK.className = 'ui secondary segment';
-  } else if (t.date < maintodolist.date) {
+  } else if (t.date.getFullYear() < maintodolist.date.getFullYear()) {
+    TASK.className = 'ui raised red segment';
+  } else if (t.date.getMonth() < maintodolist.date.getMonth()) {
+    TASK.className = 'ui raised red segment';
+  } else if (t.date.getDay() < maintodolist.date.getDay()) {
     TASK.className = 'ui raised red segment';
   } else { TASK.className = 'ui raised segment'; }
   TASK.id = `task${tempnum}`;
@@ -274,40 +304,58 @@ function addSubTask(task) {
   document.getElementById('task_editor_title').innerText = `Adding subtask to ${task.name}`;
   addtaskB.innerText = 'Add Subtask';
 }
+
 function Load() {
+  const list = JSON.parse(localStorage.getItem(`${maintodolist.username.toLowerCase()}todolist`));
+  if (typeof list === 'object') {
+    maintodolist.loadList(list);
+  } else {
+    console.log('your save doesnt exist');
+    return;
+  }
 
+  document.body.style.fontFamily = maintodolist.font;
+  document.body.style.color = maintodolist.fontColor;
+  document.body.style.backgroundColor = maintodolist.UIColor;
+  displayTasks();
 }
+
+// saves current list to local storage
 function Save() {
-
+  if (typeof (Storage) !== 'undefined') {
+    localStorage.setItem(`${maintodolist.username.toLowerCase()}todolist`, JSON.stringify(maintodolist));
+  } else {
+    console.log('No local storage support');
+  }
 }
-function saveAllSettings(){
-  changeUiColor()
-  changeFontColor()
-  changeFont()
-  changeUsername()
+function saveAllSettings() {
+  changeUiColor();
+  changeFontColor();
+  changeFont();
+  changeUsername();
 }
 function resetPoints() {
-  maintodolist.resetPoints()
+  maintodolist.resetPoints();
   pointsdisplay.innerText = maintodolist.points;
 }
 function resetStreak() {
-  maintodolist.resetStreak()
+  maintodolist.resetStreak();
   pointsdisplay.innerText = maintodolist.streak;
 }
 function changeUiColor() {
   const setting = document.getElementById('background_setting').value;
   document.body.style.backgroundColor = setting;
+  maintodolist.UIColor = setting;
 }
 function changeFont() {
-  const setting = document.getElementById("font_setting").value
-  document.body.style.fontFamily = setting
+  const setting = document.getElementById('font_setting').value;
+  document.body.style.fontFamily = setting;
+  maintodolist.font = setting;
 }
 function changeFontColor() {
-  const  setting = document.getElementById("font_color_setting").value
-  document.body.style.color = setting
-
-
-
+  const setting = document.getElementById('font_color_setting').value;
+  document.body.style.color = setting;
+  maintodolist.fontColor = setting;
 }
 function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
@@ -412,15 +460,13 @@ deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
 applybgB.addEventListener('click', changeUiColor);
 usernameB.addEventListener('click', changeUsername);
-loadB.addEventListener('click', Load)
-saveB.addEventListener('click', Save)
-saveAllB.addEventListener('click', saveAllSettings)
-pointResetB.addEventListener('click', resetPoints)
-streakResetB.addEventListener('click', resetStreak)
-fontB.addEventListener('click',changeFont)
-fontColorB.addEventListener('click', changeFontColor)
-
-
+loadB.addEventListener('click', Load);
+saveB.addEventListener('click', Save);
+saveAllB.addEventListener('click', saveAllSettings);
+pointResetB.addEventListener('click', resetPoints);
+streakResetB.addEventListener('click', resetStreak);
+fontB.addEventListener('click', changeFont);
+fontColorB.addEventListener('click', changeFontColor);
 
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
