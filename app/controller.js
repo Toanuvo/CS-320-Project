@@ -31,6 +31,7 @@ class List {
     this.streak = 0;
     this.date = new Date();
     this.sorttype = '1-100';
+    this.font = "Arial"
   }
   resetPoints(){
     this.points = 0
@@ -140,6 +141,8 @@ const loadB = document.getElementById('load_button')
 const pointResetB = document.getElementById('point_reset_button')
 const streakResetB = document.getElementById('streak_reset_button')
 const cheatB = document.getElementById('adminUser')
+const fontB = document.getElementById("font_button")
+const fontColorB = document.getElementById('font_color_button')
 
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
@@ -296,11 +299,14 @@ function changeUiColor() {
   document.body.style.backgroundColor = setting;
 }
 function changeFont() {
-  console.log("change font hit")
-
+  const setting = document.getElementById("font_setting").value
+  document.body.style.fontFamily = setting
 }
 function changeFontColor() {
-  console.log("change font color hit")
+  const  setting = document.getElementById("font_color_setting").value
+  document.body.style.color = setting
+
+
 
 }
 function displayHomePageTasks() {
@@ -411,6 +417,9 @@ saveB.addEventListener('click', Save)
 saveAllB.addEventListener('click', saveAllSettings)
 pointResetB.addEventListener('click', resetPoints)
 streakResetB.addEventListener('click', resetStreak)
+fontB.addEventListener('click',changeFont)
+fontColorB.addEventListener('click', changeFontColor)
+
 
 
 for (const T of sortBs) {

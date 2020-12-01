@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<span>
+
 <head>
   <meta charset="UTF-8">
   <title>Todolist</title>
@@ -303,27 +303,28 @@
       </p>
       <p>
       <div class="ui selection dropdown">
-        <input type="hidden" name="Font">
+        <input type="hidden" name="Font" id= "font_setting">
         <i class="dropdown icon"></i>
         <div class="default text">font</div>
         <div class="menu">
-          <div class="item" data-value="1">Times New roman</div>
-          <div class="item" data-value="0">italic</div>
+          <div class="item" data-value="Times New roman">Times New roman</div>
+          <div class="item" data-value="Arial">Arial</div>
+          <div  class="item" data-value="Calibri">Calibri</div>
         </div>
       </div>
-      <button class="ui button">apply</button>
+      <button class="ui button" id="font_button">apply</button>
       </p>
       <p>
       <div class="ui selection dropdown">
-        <input type="hidden" name="Font Color">
+        <input type="hidden" name="Font Color" id="font_color_setting">
         <i class="dropdown icon"></i>
         <div class="default text">Font Color</div>
         <div class="menu">
-          <div class="item" data-value="1">Red</div>
-          <div class="item" data-value="0">Blue</div>
+          <div class="item" data-value="red">Red</div>
+          <div class="item" data-value="blue">Blue</div>
         </div>
       </div>
-      <button class="ui button">apply</button>
+      <button class="ui button" id="font_color_button">apply</button>
 
       </p>
 
@@ -392,5 +393,5 @@
   </section>
 </footer>
 <script type="text/javascript" src="controller.js"></script>
-</span>
+
 </html>
