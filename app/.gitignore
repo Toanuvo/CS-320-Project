@@ -1,7 +1,0 @@
-/venv
-/.idea
-/__pycache__
-/ui_calc.py
-*.iml
-/node_modules
-package-lock.json
