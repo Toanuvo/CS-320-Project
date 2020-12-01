@@ -32,6 +32,14 @@ class List {
     this.date = new Date();
     this.sorttype = '1-100';
   }
+  resetPoints(){
+    this.points = 0
+
+  }
+  resetStreak(){
+    this.streak = 0
+
+  }
 
   changeUsername(name) {
     this.username = name;
@@ -62,7 +70,13 @@ class List {
   }
 
   compeltetask(task) {
-    this.points *= (this.streak + 1);
+    if (this.streak != 0){
+      this.points += (this.streak * 1);
+    }else {
+      this.points += ( 1);
+
+    }
+
     this.removetask(task);
   }
 
@@ -120,6 +134,13 @@ const deletetaskB = document.getElementById('deletetask_button');
 const clearinputB = document.getElementById('clearinput_button');
 const applybgB = document.getElementById('apply_background_setting');
 const usernameB = document.getElementById('username_button');
+const saveB = document.getElementById('save_button')
+const saveAllB = document.getElementById('saveAll_button')
+const loadB = document.getElementById('load_button')
+const pointResetB = document.getElementById('point_reset_button')
+const streakResetB = document.getElementById('streak_reset_button')
+const cheatB = document.getElementById('adminUser')
+
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
@@ -256,20 +277,30 @@ function Load() {
 function Save() {
 
 }
+function saveAllSettings(){
+  changeUiColor()
+  changeFontColor()
+  changeFont()
+  changeUsername()
+}
 function resetPoints() {
-
+  maintodolist.resetPoints()
+  pointsdisplay.innerText = maintodolist.points;
 }
 function resetStreak() {
-
+  maintodolist.resetStreak()
+  pointsdisplay.innerText = maintodolist.streak;
 }
 function changeUiColor() {
   const setting = document.getElementById('background_setting').value;
   document.body.style.backgroundColor = setting;
 }
 function changeFont() {
+  console.log("change font hit")
 
 }
 function changeFontColor() {
+  console.log("change font color hit")
 
 }
 function displayHomePageTasks() {
@@ -375,6 +406,13 @@ deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
 applybgB.addEventListener('click', changeUiColor);
 usernameB.addEventListener('click', changeUsername);
+loadB.addEventListener('click', Load)
+saveB.addEventListener('click', Save)
+saveAllB.addEventListener('click', saveAllSettings)
+pointResetB.addEventListener('click', resetPoints)
+streakResetB.addEventListener('click', resetStreak)
+
+
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
 }
