@@ -70,23 +70,17 @@
         <div class="ui segment">
           <div class="ui fluid input">
             <input type="text" placeholder="Task Name" id="name_input">
-          </div>
-        </div>
-        <div class="ui segment">
-          <div class="ui fluid input">
             <input type="date" placeholder="Task Date" id="date_input">
-          </div>
-        </div>
-        <div class="ui segment">
-          <div class="ui fluid input">
             <input type="number" placeholder="Task Priority" id="priority_input" min="0" value=0>
           </div>
         </div>
-      </div>
+        </div>
 
       <div class="ui segment">
         <textarea id="desc_input" placeholder="Task Description" rows="4"></textarea>
       </div>
+
+
       <div class="ui buttons">
         <button class="ui button" id="addtask_button">
           Add Task
@@ -109,6 +103,7 @@
         <button class="ui button" data-sortB>1/11/1111</button>
       </div>
     </div>
+    <!--
     <div class="ui raised segment">
       task format reference. to be removed
       <div class="ui horizontal segments">
@@ -154,7 +149,10 @@
           Compelete Task
         </button>
       </div>
+
     </div>
+-->
+
     <div id="tasks">
 
     </div>
@@ -366,14 +364,14 @@
     <div class="ui raised segment">
       points
       <br>
-      <div class="ui black inverted circular segment" id="points">
+      <div class="ui black inverted segment" id="points">
         0
       </div>
     </div>
     <div class="ui raised segment">
       streak
       <br>
-      <div class="ui black inverted circular segment">
+      <div class="ui black inverted segment">
         0
       </div>
     </div>
