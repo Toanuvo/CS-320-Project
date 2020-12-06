@@ -37,6 +37,7 @@ class List {
     this.UIColor = 'slategray';
     this.font = 'Arial';
     this.fontColor = 'black';
+    this.lastcompletedtaskdate = null;
   }
 
   loadList(list) {
@@ -59,6 +60,9 @@ class List {
     this.font = list.font;
     this.UIColor = list.UIColor;
     this.fontColor = list.fontColor;
+    if (list.lastcompletedtaskdate != null) {
+      this.lastcompletedtaskdate = new Date(list.lastcompletedtaskdate);
+    } else this.lastcompletedtaskdate = null;
   }
 
   resetPoints() {
@@ -97,11 +101,37 @@ class List {
     // change specific task in array for different needs
   }
 
+  // 86400000 is the milliseconds in a day
+  // streak is incremented if both the last task and this task are due less that a day ago
+  // the streak is reset if an overdue task is completed
   compeltetask(task) {
+    if (this.lastcompletedtaskdate != null) {
+      const datediff = this.date.valueOf() - this.lastcompletedtaskdate;
+      const curdatediff = this.date.valueOf() - task.date.valueOf();
+      if (datediff < 86400000 && curdatediff < 86400000) { // if both the last complete task and this task were within 1 day of cur day
+        this.streak++;
+        this.lastcompletedtaskdate = task.date;
+      } else { // if we complete an overdue task
+        this.streak = 0;
+        this.lastcompletedtaskdate = null;
+        this.removetask(task);
+        return;
+      }
+    } else { // if the current completed task is not overdue
+      if (task.date.getFullYear() < maintodolist.date.getFullYear()
+      || task.date.getMonth() < maintodolist.date.getMonth()
+      || task.date.getDay() < maintodolist.date.getDay()) {
+        this.removetask(task);
+        return;
+      }
+      this.streak++;
+      this.lastcompletedtaskdate = task.date;
+    }
+
     if (this.streak !== 0) {
       this.points += (this.streak);
     } else {
-      this.points += (1);
+      this.points++;
     }
 
     this.removetask(task);
@@ -121,8 +151,8 @@ class List {
   }
 
   // sort types:
-  // A-Z: sort by task name alphabetically, uses ascii codes
-  // Z-A: sort by task name reverse alphabetically,  uses ascii codes
+  // A-Z: sort by task name lexographically, uses ascii codes
+  // Z-A: sort by task name reverse lexographically,  uses ascii codes
   // 01/1-100: sort by task priority lowest first
   // 10/100-1: sort by task priority highest first
   // 1/11/1111: sort by task date: earliest first
@@ -173,6 +203,7 @@ const fontColorB = document.getElementById('font_color_button');
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
+const streakdisplay = document.getElementById('streak');
 const homepagetaskdisplay = document.getElementById('homepage_tasks');
 const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
@@ -203,11 +234,12 @@ function displayTasks() {
     taskdisplay.appendChild(TASK);
   }
   pointsdisplay.innerText = maintodolist.points;
+  streakdisplay.innerText = maintodolist.streak;
   displayHomePageTasks();
 }
 
 // helped function to create the html for tasks
-function createTaskHTML(t, tempnum, subtask) {
+function createTaskHTML(t, tempnum, subtask, onhomepage) {
   const TASK = document.createElement('DIV');
 
   // change task look depending on type
@@ -225,7 +257,6 @@ function createTaskHTML(t, tempnum, subtask) {
   const DATE = document.createElement('DIV');
   const PRIORITY = document.createElement('DIV');
   const sect = document.createElement('DIV');
-  const EDIT_B = document.createElement('BUTTON');
   const COMPLETE_B = document.createElement('BUTTON');
   const DESC = document.createElement('DIV');
 
@@ -239,15 +270,12 @@ function createTaskHTML(t, tempnum, subtask) {
   DESC.className = 'ui raised segment';
   DESC.innerText = t.desc;
 
-  EDIT_B.className = 'ui button';
-  EDIT_B.id = `edittask${tempnum}`;
-  EDIT_B.innerText = 'Edit Task';
   COMPLETE_B.className = 'ui button';
   COMPLETE_B.id = `completetask${tempnum}`;
   COMPLETE_B.innerText = 'Complete Task';
 
   // add listeners to buttons
-  EDIT_B.addEventListener('click', editTask.bind(this, t));
+
   COMPLETE_B.addEventListener('click', completeTask.bind(this, t));
 
   sect.appendChild(NAME);
@@ -255,9 +283,18 @@ function createTaskHTML(t, tempnum, subtask) {
   sect.appendChild(PRIORITY);
   TASK.appendChild(sect);
   TASK.appendChild(DESC);
-  TASK.appendChild(EDIT_B);
   TASK.appendChild(COMPLETE_B);
-  if (!subtask) {
+
+  if (!onhomepage) {
+    const EDIT_B = document.createElement('BUTTON');
+    EDIT_B.className = 'ui button';
+    EDIT_B.id = `edittask${tempnum}`;
+    EDIT_B.innerText = 'Edit Task';
+    EDIT_B.addEventListener('click', editTask.bind(this, t));
+    TASK.appendChild(EDIT_B);
+  }
+
+  if (!subtask && !onhomepage) {
     const ADDSUB_B = document.createElement('BUTTON');
     ADDSUB_B.className = 'ui button';
     ADDSUB_B.id = `addsubtask${tempnum}`;
@@ -363,10 +400,10 @@ function displayHomePageTasks() {
 
   for (let i = 0; i < Math.min(5, maintodolist.tasks.length); i++) {
     const t = maintodolist.tasks[i];
-    const TASK = createTaskHTML(t, tempnum, false);
+    const TASK = createTaskHTML(t, tempnum, false, true);
     tempnum++;
     for (const s of t.subtasks) {
-      const SUB = createTaskHTML(s, tempnum, true);
+      const SUB = createTaskHTML(s, tempnum, true, true);
       TASK.appendChild(SUB);
       tempnum++;
     }
