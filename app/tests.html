@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mocha tests</title>
+</head>
+<body>
+<div id="mocha"></div>
+<script
+    src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscoremin.js"></script>
+<script src="https://unpkg.com/chai/chai.js"></script>
+<script src="https://unpkg.com/mocha/mocha.js"></script>
+<script>mocha.setup('bdd')</script>
+<script src="controller.js"></script>
+<script src="mochatests.js"></script>
+<script>
+  mocha.run();
+</script>
+
+</body>
+</html>

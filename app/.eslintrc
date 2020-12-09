@@ -5,6 +5,7 @@
 		"sourceType": "module"
 	},
 	"rules": {
+
     "max-classes-per-file": ["error", 20],
     "max-len": ["error", 120],
 		"no-console": "off",
@@ -18,6 +19,12 @@
 	"globals": {
     "document": true,
     "localStorage": true,
-		"_": true
-	}
+		"_": true,
+    "chai":true
+	},
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  }
 }
