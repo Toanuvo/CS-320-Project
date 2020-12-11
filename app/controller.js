@@ -38,6 +38,7 @@ class List {
     this.font = 'Arial';
     this.fontColor = 'black';
     this.lastcompletedtaskdate = null;
+    this.showTopXhome = 5;
   }
 
   loadList(list) {
@@ -67,6 +68,9 @@ class List {
 
   resetPoints() {
     this.points = 0;
+  }
+  changeTopXtoshow(int){
+    this.showTopXhome = int
   }
 
   resetStreak() {
@@ -199,7 +203,7 @@ const streakResetB = document.getElementById('streak_reset_button');
 const cheatB = document.getElementById('adminUser');
 const fontB = document.getElementById('font_button');
 const fontColorB = document.getElementById('font_color_button');
-
+const topXSetting = document.getElementById('top_X_results_button')
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
@@ -379,6 +383,10 @@ function resetStreak() {
   maintodolist.resetStreak();
   pointsdisplay.innerText = maintodolist.streak;
 }
+function changeTopXHomePage(){
+  const setting = document.getElementById('top_X_results_setting').value
+  maintodolist.changeTopXtoshow(setting)
+}
 function changeUiColor() {
   const setting = document.getElementById('background_setting').value;
   document.body.style.backgroundColor = setting;
@@ -398,7 +406,7 @@ function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
   let tempnum = 0;
 
-  for (let i = 0; i < Math.min(5, maintodolist.tasks.length); i++) {
+  for (let i = 0; i < Math.min(topXSetting, maintodolist.tasks.length); i++) {
     const t = maintodolist.tasks[i];
     const TASK = createTaskHTML(t, tempnum, false, true);
     tempnum++;
@@ -504,6 +512,7 @@ pointResetB.addEventListener('click', resetPoints);
 streakResetB.addEventListener('click', resetStreak);
 fontB.addEventListener('click', changeFont);
 fontColorB.addEventListener('click', changeFontColor);
+topXSetting.addEventListener('click', changeTopXHomePage)
 
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
