@@ -46,12 +46,11 @@ describe('todolist tests', function () {
           chai.expect(tsk1.desc).to.equal(`this is task${i}`);
         }
       });
-      // TODO needs to be fixed for the subtask part
       it('should be able to add subtasks to tasks', function () {
         // should test same stuff as add task but for the subtask and its new properties
         const list = new List();
         list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
-        list.addtask('test subtask', new Date('01/12/2021'), 0, 'this is a new task', undefined);
+        list.addtask('test subtask', new Date('01/12/2021'), 0, 'this is a new task', 0);
         const tsk1 = list.tasks[0];
         const stsk1 = tsk1.subtasks[0];
         chai.expect(tsk1.name).to.equal('test task');
@@ -63,27 +62,47 @@ describe('todolist tests', function () {
         chai.expect(stsk1.priority).to.equal(0);
         chai.expect(stsk1.desc).to.equal('this is a new task');
       });
-      // TODO needs to be finished
+
 
       it('should be able to add many subtasks to tasks', function () {
         const list = new List();
         list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
-        list.addtask('test 1subtask', new Date('01/13/2021'), 0, 'this is a new task', 0);
-        list.addtask('test 2subtask', new Date('01/13/2021'), 0, 'this is a new 1task', 0);
-        list.addtask('test 3subtask', new Date('01/13/2021'), 0, 'this is a new 2task', 0);
+        list.addtask('test 1subtask', new Date('01/13/2021'), 0, 'this is a new 1task', 0);
+        list.addtask('test 2subtask', new Date('01/13/2021'), 1, 'this is a new 2task', 0);
+        list.addtask('test 3subtask', new Date('01/13/2021'), 0, 'this is a new 3task', 0);
+        const tsk1 = list.tasks[0]
+        const stsk1 = tsk1.subtasks[1]
+        chai.expect(stsk1.name).to.equal('test 2subtask')
+        chai.expect(stsk1.date).to.deep.equal(new Date('01/13/2021'))
+        chai.expect(stsk1.priority).to.equal(1)
+        chai.expect(stsk1.desc).to.equal('this is a new 2task')
+
+
       });
     });
-    // TODO needs to be finished
     describe('edittask()', function () {
       it('should be able to edit a given task given an index for the task', function () {
         const list = new List();
         list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
-        list.edittask(null, 'test editsubtask', new Date('01/12/2021'), 0, 'this is a reetask');
-        chai.expect().to.equal();
+        list.edittask(0 , 'test edittask', new Date('01/13/2021'), 1, 'this is a reetask');
+        const tsk1 = list.tasks[0]
+        chai.expect(tsk1.name).to.equal('test edittask');
+        chai.expect(tsk1.date).to.deep.equal(new Date('01/13/2021'));
+        chai.expect(tsk1.priority).to.equal(1);
+        chai.expect(tsk1.desc).to.equal("this is a reetask");
+
       });
-      // TODO needs to be finished
       it('should be able to edit subtask', function () {
         const list = new List();
+        list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
+        list.addtask("test subtask", new Date('01/13/2021'), 0, 'this is a subtask',0)
+        list.edittask(0, 'test reee', new Date('01/14/2021'),1,'this is editited', true)
+        const subtask = list.tasks[0].subtasks[0]
+        chai.expect(subtask.name).to.equal('test reee');
+        chai.expect(subtask.date).to.deep.equal(new Date('01/14/2021'));
+        chai.expect(subtask.priority).to.equal(1);
+        chai.expect(subtask.desc).to.equal("this is editited");
+
       });
     });
 
@@ -239,7 +258,19 @@ describe('todolist tests', function () {
     // TODO needs to be done
     describe('sortDate()', function () {
       it('should be able to sort the current list of tasks by date earliest first', function () {
+        const dates = [new Date('12/11/2020'),new Date('12/12/2020'),new Date('12/13/2020'),new Date('12/14/2020'),new Date('12/15/2020'),new Date('12/16/2020'),new Date('12/17/2020')]
 
+        const list = new List()
+        const randdates = shuffleArray(dates.slice())
+        for (let i =0; i < 7;i++ ){
+          list.addtask("test", randdates[i], i, "this is a test")
+
+        }
+        list.sortDate()
+        for (let i=0; i<7; i++){
+          chai.expect(list.tasks[i].date).to.deep.equal(dates[i])
+
+        }
       });
     });
   });
