@@ -160,13 +160,14 @@ describe('todolist tests', function () {
 
       });
     });
+
     describe('resetPoints()', function () {
       it('should be able to reset the current points to zero', function () {
         const list = new List();
         list.points++
         chai.expect(list.points).to.equal(1)
         list.resetPoints()
-        list.expect(list.points).to.equal(0)
+        chai.expect(list.points).to.equal(0)
       });
     });
     describe('sortAZ()', function () {
@@ -185,7 +186,19 @@ describe('todolist tests', function () {
     });
     describe('sortZA()', function () { //
       it('should be able to sort the current list of tasks by reverse lexographic order', function () {
+
         const list = new List();
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        const reverseA ='zyxwvutsrqponmlkjihgfedcba'.split('')
+        const randalph = shuffleArray(alphabet.slice());
+        for (const a of randalph) {
+          list.addtask(a, new Date(), 0, 'this is a test');
+        }
+        list.sortZA();
+        for (const a of reverseA) {
+          chai.expect(list.tasks[reverseA.indexOf(a)].name).to.be.equal(a);
+        }
+
       });
     });
     describe('sort01()', function () {
@@ -205,11 +218,29 @@ describe('todolist tests', function () {
         }
       });
     });
+    //TODO somthing is wrong with
     describe('sort10()', function () { //
       it('should be able to sort the current list of tasks by priority highest first', function () {
         const list = new List();
+        const ints = new Array(100);
+        for (let i = 0; i < 100; i++) {
+          ints[i] = i;
+        }
+        revierse = ints.reverse()
+        const randints = shuffleArray(ints.slice());
+        for (const i of randints) {
+          list.addtask(String(i), new Date(), i, 'this is a test');
+        }
+        list.sort10();
+      
+        for (const i of revierse) {
+          chai.expect(list.tasks[i].priority).to.be.equal(i);
+
+        }
+
       });
     });
+    //TODO needs to be done
     describe('sortDate()', function () {
       it('should be able to sort the current list of tasks by date earliest first', function () {
 
