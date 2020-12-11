@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
+// noinspection Unresolvedfunctionormethod
 /* global Task, List, addTask, deleteTask, addSubTasks,  , resePoints, resetStreak, changeUiColor, changeFont,  */
 
 // helper function for single task adding
@@ -32,25 +33,27 @@ describe('todolist tests', function () {
         chai.expect(list.tasks[0]).has.property('priority').that.equal(0);
         chai.expect(list.tasks[0]).has.property('desc').that.equal('this is a test');
       });
-      it('should be able to add multiple tasks and are in the order they were put in ', function () {
+      it('should be able to add many tasks and are in the order they were put in ', function () {
         const list = new List();
-        list.addtask('first task', new Date('01/12/2021'), 0, 'this is the first task');
-        list.addtask('second task', new Date('01/12/2021'), 1, 'this is the second task');
-        list.addtask('third task', new Date('01/12/2021'), 0, 'this is the third task');
-        const tsk1 = list.tasks[0];
-        chai.expect(tsk1.name).to.equal('first task');
-        chai.expect(tsk1.date).to.deep.equal(new Date('01/12/2021'));
-        chai.expect(tsk1.priority).to.equal(0);
-        chai.expect(tsk1.desc).to.equal('this is the first task');
+        for (let i = 0; i <= 1000; i++) {
+          list.addtask(`task ${i}`, new Date('01/12/2021'), i, `this is task${i}`);
+        }
+        for (let i = 0; i <= 1000; i++) {
+          const tsk1 = list.tasks[i];
+          chai.expect(tsk1.name).to.equal(`task ${i}`);
+          chai.expect(tsk1.date).to.deep.equal(new Date('01/12/2021'));
+          chai.expect(tsk1.priority).to.equal(i);
+          chai.expect(tsk1.desc).to.equal(`this is task${i}`);
+        }
       });
-      //TODO needs to be fixed for the subtask part
+      // TODO needs to be fixed for the subtask part
       it('should be able to add subtasks to tasks', function () {
         // should test same stuff as add task but for the subtask and its new properties
         const list = new List();
-        list.addtask("test task", new Date('01/12/2021'), 0,"this is a task")
-        list.addtask("test subtask", new Date('01/12/2021'), 0, "this is a new task", undefined)
-        const tsk1 = list.tasks[0]
-        const stsk1 = tsk1.subtasks[0]
+        list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
+        list.addtask('test subtask', new Date('01/12/2021'), 0, 'this is a new task', undefined);
+        const tsk1 = list.tasks[0];
+        const stsk1 = tsk1.subtasks[0];
         chai.expect(tsk1.name).to.equal('test task');
         chai.expect(tsk1.date).to.deep.equal(new Date('01/12/2021'));
         chai.expect(tsk1.priority).to.equal(0);
@@ -59,28 +62,26 @@ describe('todolist tests', function () {
         chai.expect(stsk1.date).to.deep.equal(new Date('01/12/2021'));
         chai.expect(stsk1.priority).to.equal(0);
         chai.expect(stsk1.desc).to.equal('this is a new task');
-
       });
-      //TODO needs to be finished
+      // TODO needs to be finished
+
       it('should be able to add many subtasks to tasks', function () {
         const list = new List();
-        list.addtask("test task", new Date('01/12/2021'), 0,"this is a task");
-        list.addtask("test 1subtask", new Date('01/13/2021'), 0, "this is a new task", undefined);
-        list.addtask("test 2subtask", new Date('01/13/2021'), 0, "this is a new 1task", undefined);
-        list.addtask("test 3subtask", new Date('01/13/2021'), 0, "this is a new 2task", undefined);
-
+        list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
+        list.addtask('test 1subtask', new Date('01/13/2021'), 0, 'this is a new task', 0);
+        list.addtask('test 2subtask', new Date('01/13/2021'), 0, 'this is a new 1task', 0);
+        list.addtask('test 3subtask', new Date('01/13/2021'), 0, 'this is a new 2task', 0);
       });
     });
-    //TODO needs to be finished
+    // TODO needs to be finished
     describe('edittask()', function () {
       it('should be able to edit a given task given an index for the task', function () {
         const list = new List();
-        list.addtask("test task", new Date('01/12/2021'), 0,"this is a task");
-        list.edittask(null,"test editsubtask", new Date('01/12/2021'), 0,"this is a reetask");
+        list.addtask('test task', new Date('01/12/2021'), 0, 'this is a task');
+        list.edittask(null, 'test editsubtask', new Date('01/12/2021'), 0, 'this is a reetask');
         chai.expect().to.equal();
-
       });
-      //TODO needs to be finished
+      // TODO needs to be finished
       it('should be able to edit subtask', function () {
         const list = new List();
       });
@@ -131,7 +132,7 @@ describe('todolist tests', function () {
         chai.expect(list.points).to.equal(0);
         chai.expect(list.streak).to.equal(0);
       });
-      it('should be able to reamove a subtask', function () {
+      it('should be able to remove a subtask', function () {
         const list = new List();
         adtsk(list);
         list.addtask('subtask1', new Date(), 0, 'this is a subtask', 0);
@@ -146,28 +147,29 @@ describe('todolist tests', function () {
     describe('changeUsername()', function () {
       it('should be able to change the username', function () {
         const list = new List();
-        list.changeUsername("Riley")
-        chai.expect(list.username).to.equal("Riley")
+        list.changeUsername('Riley');
+        chai.expect(list.username).to.be.a('string').that.equal('Riley');
       });
     });
     describe('resetStreak()', function () {
       it('should be able to reset the current streak', function () {
         const list = new List();
-        list.streak++
-        chai.expect(list.streak).to.equal(1)
-        list.resetStreak()
-        chai.expect(list.streak).to.equal(0)
-
+        list.addtask('test task', new Date(), 0, 'this is a test');
+        list.compeltetask(list.tasks[0]);
+        chai.expect(list.streak).to.equal(1);
+        list.resetStreak();
+        chai.expect(list.streak).to.equal(0);
       });
     });
 
     describe('resetPoints()', function () {
       it('should be able to reset the current points to zero', function () {
         const list = new List();
-        list.points++
-        chai.expect(list.points).to.equal(1)
-        list.resetPoints()
-        chai.expect(list.points).to.equal(0)
+        list.addtask('test task', new Date(), 0, 'this is a test');
+        list.compeltetask(list.tasks[0]);
+        chai.expect(list.points).to.equal(1);
+        list.resetPoints();
+        chai.expect(list.points).to.equal(0);
       });
     });
     describe('sortAZ()', function () {
@@ -186,11 +188,9 @@ describe('todolist tests', function () {
     });
     describe('sortZA()', function () { //
       it('should be able to sort the current list of tasks by reverse lexographic order', function () {
-
         const list = new List();
-        const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-        const reverseA ='zyxwvutsrqponmlkjihgfedcba'.split('')
-        const randalph = shuffleArray(alphabet.slice());
+        const reverseA = 'abcdefghijklmnopqrstuvwxyz'.split('').reverse();
+        const randalph = shuffleArray(reverseA.slice());
         for (const a of randalph) {
           list.addtask(a, new Date(), 0, 'this is a test');
         }
@@ -198,7 +198,6 @@ describe('todolist tests', function () {
         for (const a of reverseA) {
           chai.expect(list.tasks[reverseA.indexOf(a)].name).to.be.equal(a);
         }
-
       });
     });
     describe('sort01()', function () {
@@ -218,29 +217,26 @@ describe('todolist tests', function () {
         }
       });
     });
-    //TODO somthing is wrong with
     describe('sort10()', function () { //
       it('should be able to sort the current list of tasks by priority highest first', function () {
         const list = new List();
         const ints = new Array(100);
-        for (let i = 0; i < 100; i++) {
-          ints[i] = i;
+        for (let i = 100; i >= 0; i--) {
+          ints[100 - i] = i;
         }
-        revierse = ints.reverse()
+
         const randints = shuffleArray(ints.slice());
         for (const i of randints) {
           list.addtask(String(i), new Date(), i, 'this is a test');
         }
         list.sort10();
-      
-        for (const i of revierse) {
-          chai.expect(list.tasks[i].priority).to.be.equal(i);
 
+        for (const i of ints) {
+          chai.expect(list.tasks[100 - i].priority).to.be.equal(i);
         }
-
       });
     });
-    //TODO needs to be done
+    // TODO needs to be done
     describe('sortDate()', function () {
       it('should be able to sort the current list of tasks by date earliest first', function () {
 
