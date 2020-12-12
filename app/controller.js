@@ -64,39 +64,10 @@ class List {
     if (list.lastcompletedtaskdate != null) {
       this.lastcompletedtaskdate = new Date(list.lastcompletedtaskdate);
     } else this.lastcompletedtaskdate = null;
+    this.showTopXhome = list.showTopXhome;
   }
 
-  resetPoints() {
-    this.points = 0;
-  }
-  changeTopXtoshow(int){
-    this.showTopXhome = int
-  }
-
-  resetStreak() {
-    this.streak = 0;
-  }
-
-  changeUsername(name) {
-    this.username = name;
-  }
-  increaseS(){
-    this.streak++
-
-  }
-  decreaseS(){
-    this.streak--
-
-  }
-  increaseP(){
-    this.points++
-
-  }
-  decreaseP(){
-    this.points--
-
-  }
-
+  // tasknum is the index of a task in the main task list you want to add this subtask too
   addtask(name, date, priority, desc, tasknum) {
     const task = new Task(name, date, priority, desc);
     if (tasknum !== undefined) {
@@ -108,6 +79,7 @@ class List {
     }
   }
 
+  // task num is the index of the task in the task array. subtask is a boolean
   edittask(tasknum, name, date, priority, desc, subtask) {
     let task;
     if (subtask) {
@@ -124,11 +96,11 @@ class List {
   // 86400000 is the milliseconds in a day
   // streak is incremented if both the last task and this task are due less that a day ago
   // the streak is reset if an overdue task is completed
-  compeltetask(task) {
+  completetask(task) {
     if (this.lastcompletedtaskdate != null) {
       const datediff = this.date.valueOf() - this.lastcompletedtaskdate;
       const curdatediff = this.date.valueOf() - task.date.valueOf();
-      if (datediff < 86400000 && curdatediff < 86400000) { // if both the last complete task and this task were within 1 day of cur day
+      if (datediff < 86400000 && curdatediff < 86400000) { // verifys the date
         this.streak++;
         this.lastcompletedtaskdate = task.date;
       } else { // if we complete an overdue task
@@ -156,7 +128,6 @@ class List {
 
     this.removetask(task);
   }
-
 
   removetask(task) {
     if (task.parenttask === undefined) {
@@ -197,10 +168,40 @@ class List {
     this.tasks.sort((a, b) => (a.date - b.date));
     maintodolist.sorttype = '1/11/1111';
   }
+
+  resetPoints() {
+    this.points = 0;
+  }
+
+  changeTopXtoshow(int) {
+    this.showTopXhome = int;
+  }
+
+  resetStreak() {
+    this.streak = 0;
+  }
+
+  changeUsername(name) {
+    this.username = name;
+  }
+
+  increaseS() {
+    this.streak++;
+  }
+
+  decreaseS() {
+    this.streak--;
+  }
+
+  increaseP() {
+    this.points++;
+  }
+
+  decreaseP() {
+    this.points--;
+  }
 }
 console.log('controller loaded');
-
-
 
 // setup variables and objects
 const addtaskB = document.getElementById('addtask_button');
@@ -216,23 +217,23 @@ const streakResetB = document.getElementById('streak_reset_button');
 const cheatB = document.getElementById('adminUser');
 const fontB = document.getElementById('font_button');
 const fontColorB = document.getElementById('font_color_button');
-const topXSetting = document.getElementById('top_X_results_button')
+const topXSetting = document.getElementById('top_X_results_button');
 const sortBs = document.querySelectorAll('[data-sortB]');
 const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
 const streakdisplay = document.getElementById('streak');
 const homepagetaskdisplay = document.getElementById('homepage_tasks');
-const topRs = document.getElementById('topresults')
+const topRs = document.getElementById('topresults');
 const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
 const datedisplay = document.getElementById('currentdate');
-const cheatIncreasePoint = document.getElementById('cheat_increase_points')
-const cheatDecreasePoint = document.getElementById('cheat_decrease_points')
-const cheatIncreaseStreak = document.getElementById('cheat_increase_streak')
-const cheatDecreaseStreak = document.getElementById('cheat_decrease_streak')
-
+const cheatTab = document.getElementById('menu5');
+const cheatIncreasePoint = document.getElementById('cheat_increase_points');
+const cheatDecreasePoint = document.getElementById('cheat_decrease_points');
+const cheatIncreaseStreak = document.getElementById('cheat_increase_streak');
+const cheatDecreaseStreak = document.getElementById('cheat_decrease_streak');
 
 let maintodolist = new List();
 let curtask = -1;
@@ -365,105 +366,11 @@ function addSubTask(task) {
   addtaskB.innerText = 'Add Subtask';
 }
 
-function Load() {
-  const list = JSON.parse(localStorage.getItem(`${maintodolist.username.toLowerCase()}todolist`));
-  if (typeof list === 'object') {
-    maintodolist.loadList(list);
-  } else {
-    console.log('your save doesnt exist');
-    return;
-  }
-
-  document.body.style.fontFamily = maintodolist.font;
-  document.body.style.color = maintodolist.fontColor;
-  document.body.style.backgroundColor = maintodolist.UIColor;
-  displayTasks();
-}
-
-// saves current list to local storage
-function Save() {
-  if (typeof (Storage) !== 'undefined') {
-    localStorage.setItem(`${maintodolist.username.toLowerCase()}todolist`, JSON.stringify(maintodolist));
-  } else {
-    console.log('No local storage support');
-  }
-}
-function saveAllSettings() {
-  changeUiColor();
-  changeFontColor();
-  changeFont();
-  changeUsername();
-}
-function resetPoints() {
-  maintodolist.resetPoints();
-  pointsdisplay.innerText = maintodolist.points;
-}
-function resetStreak() {
-  maintodolist.resetStreak();
-  pointsdisplay.innerText = maintodolist.streak;
-}
-function changeTopXHomePage(){
-  const setting = document.getElementById('top_X_results_setting').value
-  maintodolist.changeTopXtoshow(setting)
-  const a ='These are your top '
-  const b = ' tasks:'
-  var c = a.concat(a+maintodolist.showTopXhome+b)
-  topRs.innerText = c
-
-
-
-
-}
-function changeUiColor() {
-  const setting = document.getElementById('background_setting').value;
-  document.body.style.backgroundColor = setting;
-  maintodolist.UIColor = setting;
-}
-function changeFont() {
-  const setting = document.getElementById('font_setting').value;
-  document.body.style.fontFamily = setting;
-  maintodolist.font = setting;
-}
-function changeFontColor() {
-  const setting = document.getElementById('font_color_setting').value;
-  document.body.style.color = setting;
-  maintodolist.fontColor = setting;
-}
-function cheatIncreasePs(){
-  maintodolist.increaseP()
-  pointsdisplay.innerText = maintodolist.points;
-
-}
-function cheatDecreasePs(){
-  maintodolist.decreaseP()
-  pointsdisplay.innerText = maintodolist.points;
-
-}
-function cheatIncreaseS(){
-  maintodolist.increaseS()
-  pointsdisplay.innerText = maintodolist.streak;
-}
-function adminCheatMode(){
-  var string = document.getElementById('cheatPassword').value
-  const maindiv = document.getElementById('menu5')
-  if(string === '1234567890' ){
-    maindiv.style.visibility = 'visible'
-    document.getElementById('cheatPassword').value = ''
-
-  }else{
-    maindiv.style.visibility = 'hidden'
-  }
-  document.getElementById('cheatPassword').value = ''
-}
-function cheatdecreaseS(){
-  maintodolist.decreaseS()
-  pointsdisplay.innerText = maintodolist.streak;
-}
 function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
   let tempnum = 0;
 
-  for (let i = 0; i < Math.min(topXSetting, maintodolist.tasks.length); i++) {
+  for (let i = 0; i < Math.min(maintodolist.topXSetting, maintodolist.tasks.length); i++) {
     const t = maintodolist.tasks[i];
     const TASK = createTaskHTML(t, tempnum, false, true);
     tempnum++;
@@ -478,8 +385,8 @@ function displayHomePageTasks() {
 function changeUsername() {
   maintodolist.changeUsername(document.getElementById('username_input').value);
   document.getElementById('username_input').value = '';
-  const h = 'Hello '
-  document.getElementById('usergreeting').innerText = h.concat(maintodolist.username)
+  const h = 'Hello ';
+  document.getElementById('usergreeting').innerText = h.concat(maintodolist.username);
 }
 
 function editTask(task) {
@@ -545,8 +452,99 @@ function sortTasks(button) {
 
 // complete task functionality handled by List class
 function completeTask(task) {
-  maintodolist.compeltetask(task);
+  maintodolist.completetask(task);
   displayTasks();
+}
+
+function Load() {
+  const list = JSON.parse(localStorage.getItem(`${maintodolist.username.toLowerCase()}todolist`));
+  if (typeof list === 'object') {
+    maintodolist.loadList(list);
+  } else {
+    console.log('your save doesnt exist');
+    return;
+  }
+
+  document.body.style.fontFamily = maintodolist.font;
+  document.body.style.color = maintodolist.fontColor;
+  document.body.style.backgroundColor = maintodolist.UIColor;
+  displayTasks();
+}
+
+// saves current list to local storage
+function Save() {
+  if (typeof (Storage) !== 'undefined') {
+    localStorage.setItem(`${maintodolist.username.toLowerCase()}todolist`, JSON.stringify(maintodolist));
+  } else {
+    console.log('No local storage support');
+  }
+}
+function saveAllSettings() {
+  changeUiColor();
+  changeFontColor();
+  changeFont();
+  changeUsername();
+  changeTopXHomePage();
+}
+function resetPoints() {
+  maintodolist.resetPoints();
+  pointsdisplay.innerText = maintodolist.points;
+}
+function resetStreak() {
+  maintodolist.resetStreak();
+  pointsdisplay.innerText = maintodolist.streak;
+}
+function changeTopXHomePage() {
+  const setting = document.getElementById('top_X_results_setting').value;
+  if (setting === '') {
+    return;
+  }
+  maintodolist.changeTopXtoshow(setting);
+  console.log(setting);
+  topRs.innerText = `These are your top ${setting} tasks:`;
+  displayTasks();
+}
+function changeUiColor() {
+  const setting = document.getElementById('background_setting').value;
+  document.body.style.backgroundColor = setting;
+  maintodolist.UIColor = setting;
+}
+function changeFont() {
+  const setting = document.getElementById('font_setting').value;
+  document.body.style.fontFamily = setting;
+  maintodolist.font = setting;
+}
+function changeFontColor() {
+  const setting = document.getElementById('font_color_setting').value;
+  document.body.style.color = setting;
+  maintodolist.fontColor = setting;
+}
+function adminCheatMode() {
+  const string = document.getElementById('cheatPassword').value;
+  if (string === '1234567890') {
+    cheatTab.style.visibility = 'visible';
+    document.getElementById('cheatPassword').value = '';
+  } else {
+    cheatTab.style.visibility = 'hidden';
+  }
+  document.getElementById('cheatPassword').value = '';
+}
+function cheatIncreasePs() {
+  maintodolist.increaseP();
+  pointsdisplay.innerText = maintodolist.points;
+}
+function cheatDecreasePs() {
+  maintodolist.decreaseP();
+  pointsdisplay.innerText = maintodolist.points;
+}
+function cheatIncreaseS() {
+  maintodolist.increaseS();
+  pointsdisplay.innerText = maintodolist.streak;
+}
+
+function cheatdecreaseS() {
+  maintodolist.decreaseS();
+  pointsdisplay.innerText = maintodolist.streak;
 }
 
 // helper function since JS doesnt recognize strings as ints in any easy way
@@ -562,6 +560,7 @@ function strToInt(s) {
 addtaskB.addEventListener('click', addTask);
 deletetaskB.addEventListener('click', deleteTask);
 clearinputB.addEventListener('click', clearInput);
+
 applybgB.addEventListener('click', changeUiColor);
 usernameB.addEventListener('click', changeUsername);
 loadB.addEventListener('click', Load);
@@ -571,13 +570,13 @@ pointResetB.addEventListener('click', resetPoints);
 streakResetB.addEventListener('click', resetStreak);
 fontB.addEventListener('click', changeFont);
 fontColorB.addEventListener('click', changeFontColor);
-topXSetting.addEventListener('click', changeTopXHomePage)
+topXSetting.addEventListener('click', changeTopXHomePage);
 
-cheatIncreasePoint.addEventListener('click', cheatIncreasePs)
-cheatDecreasePoint.addEventListener('click', cheatDecreasePs)
-cheatIncreaseStreak.addEventListener('click', cheatIncreaseS)
-cheatDecreaseStreak.addEventListener('click',cheatdecreaseS)
-cheatB.addEventListener('click', adminCheatMode)
+cheatB.addEventListener('click', adminCheatMode);
+cheatIncreasePoint.addEventListener('click', cheatIncreasePs);
+cheatDecreasePoint.addEventListener('click', cheatDecreasePs);
+cheatIncreaseStreak.addEventListener('click', cheatIncreaseS);
+cheatDecreaseStreak.addEventListener('click', cheatdecreaseS);
 
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
