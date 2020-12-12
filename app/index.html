@@ -20,6 +20,7 @@
     <a class="item" data-tab="tab2"id="menu2"> Tasks</a>
     <a class="item" data-tab="tab3" id="menu3">Tutorial</a>
     <a class="item" data-tab="tab4" id="menu4">Settings</a>
+    <a class="item" data-tab="tab5" id="menu5">Cheats</a>
   </div>
   </div>
 
@@ -31,14 +32,14 @@
     <h1 id="greeting">
       <div class="content">
         <i class="hand paper icon"></i>
-        Hello User
+        <div id="usergreeting">Hello User</div>
       </div>
     </h1>
     </div>
     <div class="ui horizontal segments">
       <div class="ui raised segment" >
         <p>
-          These are your top 5 tasks:
+        <div id="topresults">These are your top 5 tasks:</div>
         </p>
       </div>
 
@@ -354,7 +355,7 @@
       <p>
       cheat mode
       <div class="ui input">
-        <input type="text" placeholder="admin password">
+        <input type="text" id="cheatPassword" placeholder="admin password">
       </div>
       <button id='adminUser' class="ui button">enter</button>
 
@@ -362,6 +363,19 @@
 
     </div>
   </div>
+
+    <div class="ui vertical tab segment" id="cheats" data-tab="tab5">
+      <br>
+      <div class="ui segment">
+        <button class="ui button" id="cheat_increase_points">increase point</button>
+        <button class="ui button" id="cheat_decrease_points">decrease point</button>
+        <button class="ui button" id="cheat_increase_streak">increase streak</button>
+        <button class="ui button" id="cheat_decrease_streak">decrease streak</button>
+
+
+
+      </div>
+    </div>
 
   </div>
 

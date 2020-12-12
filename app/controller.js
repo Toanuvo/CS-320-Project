@@ -80,6 +80,22 @@ class List {
   changeUsername(name) {
     this.username = name;
   }
+  increaseS(){
+    this.streak++
+
+  }
+  decreaseS(){
+    this.streak--
+
+  }
+  increaseP(){
+    this.points++
+
+  }
+  decreaseP(){
+    this.points--
+
+  }
 
   addtask(name, date, priority, desc, tasknum) {
     const task = new Task(name, date, priority, desc);
@@ -141,9 +157,6 @@ class List {
     this.removetask(task);
   }
 
-  failtask(task) {
-
-  }
 
   removetask(task) {
     if (task.parenttask === undefined) {
@@ -187,7 +200,7 @@ class List {
 }
 console.log('controller loaded');
 
-// todo subtasks, task sorting
+
 
 // setup variables and objects
 const addtaskB = document.getElementById('addtask_button');
@@ -209,11 +222,17 @@ const taskdisplay = document.getElementById('tasks');
 const pointsdisplay = document.getElementById('points');
 const streakdisplay = document.getElementById('streak');
 const homepagetaskdisplay = document.getElementById('homepage_tasks');
+const topRs = document.getElementById('topresults')
 const name = document.getElementById('name_input');
 const date = document.getElementById('date_input');
 const priority = document.getElementById('priority_input');
 const desc = document.getElementById('desc_input');
 const datedisplay = document.getElementById('currentdate');
+const cheatIncreasePoint = document.getElementById('cheat_increase_points')
+const cheatDecreasePoint = document.getElementById('cheat_decrease_points')
+const cheatIncreaseStreak = document.getElementById('cheat_increase_streak')
+const cheatDecreaseStreak = document.getElementById('cheat_decrease_streak')
+
 
 let maintodolist = new List();
 let curtask = -1;
@@ -386,6 +405,14 @@ function resetStreak() {
 function changeTopXHomePage(){
   const setting = document.getElementById('top_X_results_setting').value
   maintodolist.changeTopXtoshow(setting)
+  const a ='These are your top '
+  const b = ' tasks:'
+  var c = a.concat(a+maintodolist.showTopXhome+b)
+  topRs.innerText = c
+
+
+
+
 }
 function changeUiColor() {
   const setting = document.getElementById('background_setting').value;
@@ -401,6 +428,36 @@ function changeFontColor() {
   const setting = document.getElementById('font_color_setting').value;
   document.body.style.color = setting;
   maintodolist.fontColor = setting;
+}
+function cheatIncreasePs(){
+  maintodolist.increaseP()
+  pointsdisplay.innerText = maintodolist.points;
+
+}
+function cheatDecreasePs(){
+  maintodolist.decreaseP()
+  pointsdisplay.innerText = maintodolist.points;
+
+}
+function cheatIncreaseS(){
+  maintodolist.increaseS()
+  pointsdisplay.innerText = maintodolist.streak;
+}
+function adminCheatMode(){
+  var string = document.getElementById('cheatPassword').value
+  const maindiv = document.getElementById('menu5')
+  if(string === '1234567890' ){
+    maindiv.style.visibility = 'visible'
+    document.getElementById('cheatPassword').value = ''
+
+  }else{
+    maindiv.style.visibility = 'hidden'
+  }
+  document.getElementById('cheatPassword').value = ''
+}
+function cheatdecreaseS(){
+  maintodolist.decreaseS()
+  pointsdisplay.innerText = maintodolist.streak;
 }
 function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
@@ -421,6 +478,8 @@ function displayHomePageTasks() {
 function changeUsername() {
   maintodolist.changeUsername(document.getElementById('username_input').value);
   document.getElementById('username_input').value = '';
+  const h = 'Hello '
+  document.getElementById('usergreeting').innerText = h.concat(maintodolist.username)
 }
 
 function editTask(task) {
@@ -513,6 +572,12 @@ streakResetB.addEventListener('click', resetStreak);
 fontB.addEventListener('click', changeFont);
 fontColorB.addEventListener('click', changeFontColor);
 topXSetting.addEventListener('click', changeTopXHomePage)
+
+cheatIncreasePoint.addEventListener('click', cheatIncreasePs)
+cheatDecreasePoint.addEventListener('click', cheatDecreasePs)
+cheatIncreaseStreak.addEventListener('click', cheatIncreaseS)
+cheatDecreaseStreak.addEventListener('click',cheatdecreaseS)
+cheatB.addEventListener('click', adminCheatMode)
 
 for (const T of sortBs) {
   T.addEventListener('click', sortTasks.bind(this, T));
