@@ -173,10 +173,6 @@ class List {
     this.points = 0;
   }
 
-  changeTopXtoshow(int) {
-    this.showTopXhome = int;
-  }
-
   resetStreak() {
     this.streak = 0;
   }
@@ -498,8 +494,9 @@ function changeTopXHomePage() {
   if (setting === '') {
     return;
   }
-  maintodolist.changeTopXtoshow(setting);
+  maintodolist.showTopXhome = setting;
   topRs.innerText = `These are your top ${setting} tasks`;
+  displayTasks();
 }
 function changeUiColor() {
   const setting = document.getElementById('background_setting').value;
