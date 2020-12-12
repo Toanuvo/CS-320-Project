@@ -463,7 +463,7 @@ function displayHomePageTasks() {
   homepagetaskdisplay.innerHTML = '';
   let tempnum = 0;
 
-  for (let i = 0; i < Math.min(topXSetting, maintodolist.tasks.length); i++) {
+  for (let i = 0; i < Math.min(maintodolist.showTopXhome, maintodolist.tasks.length); i++) {
     const t = maintodolist.tasks[i];
     const TASK = createTaskHTML(t, tempnum, false, true);
     tempnum++;
