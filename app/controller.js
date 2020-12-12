@@ -536,12 +536,12 @@ function cheatDecreasePs() {
 }
 function cheatIncreaseS() {
   maintodolist.increaseS();
-  pointsdisplay.innerText = maintodolist.streak;
+  streakdisplay.innerText = maintodolist.streak;
 }
 
 function cheatdecreaseS() {
   maintodolist.decreaseS();
-  pointsdisplay.innerText = maintodolist.streak;
+  streakdisplay.innerText = maintodolist.streak;
 }
 
 // helper function since JS doesnt recognize strings as ints in any easy way
