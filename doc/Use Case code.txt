@@ -6,20 +6,57 @@ left to right direction
 C --|> U
 D--|>U
 rectangle TodoList {
-  U -- (Create task)
-(Create task)--> (verify date):include
-(verify date)--> (new task added to the TodoList)
-U--(set task priority)
+
+U -- (Create task)
+
+U -- (Add subtask)
+U -- (Edit subtask)
+(Add subtask) --> (Create task)
+(Edit subtask) --> (Edit task)
+
+(Create task)--.> (set task name):extend
+(Create task)--.> (set task date):extend
 (Create task) --.> (set task priority):extend
-(set task priority)--> (new task added to the TodoList)
-U -- (set task name)
-(Create task) --.>(set task name):extend
+(Create task)--.> (set task desc):extend
+
 (set task name)--> (new task added to the TodoList)
+(set task date)--> (new task added to the TodoList)
+(set task priority)--> (new task added to the TodoList)
+(set task desc)--> (new task added to the TodoList)
+
+U -- (Edit task)
+(Edit task) --.> (edit task name):extend
+(Edit task) --.> (edit task date):extend
+(Edit task) --.> (edit task priority):extend
+(Edit task) --.> (edit task desc):extend
+
+(edit task name)--> (task is edited)
+(edit task date) --> (task is edited)
+(edit task priority)--> (task is edited)
+(edit task desc) --> (task is edited)
 U--(Complete task)
+(Complete task)-->(Task removed from the TodoList):include
+(Complete task) -->(Modify points):include
+(Complete task) -->(Modify streak):include
+
 U--(Delete task)
 (Delete task)-->(Task removed from the TodoList):include
-(Complete task)-->(Task removed from the TodoList):include
-D -- (Change the current date of the system)
-(Complete task) -->(Modify points):include
+
+D -- (Change the points)
+D -- (Change the streak) 
+(Change the points)-->(Modify points):include
+(Change the streak) -->(Modify streak):include
+
+U -- (Change background color)
+U -- (Change font)
+U -- (Change font color)
+U -- (Change homepage task display amount)
+U -- (Change username)
+
+(Change background color)--.> (Apply setting):extend
+(Change font)--.> (Apply setting):extend
+(Change font color)--.> (Apply setting):extend
+(Change homepage task display amount)--.> (Apply setting):extend
+(Change username)--.> (Apply setting):extend
 }
 @enduml
